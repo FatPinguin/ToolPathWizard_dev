@@ -1,4 +1,4 @@
-from ToolPathWizard_dev.lib.reloading import reloading
+#from ToolPathWizard_dev.lib.reloading import reloading
 import numpy as np
 
 from .Classes import cls_surfaces_grp, cls_surface, cls_operation, cls_curve, cls_point, cls_coordinates, cls_vector, cls_edge, cls_points_of_interest
@@ -107,7 +107,7 @@ def verify_curve_length(dataCurve:cls_curve, fabMode:int, startingDistance:float
             return True
         
 
-@reloading
+#@reloading
 def get_edges(curveID:str):
     curveGeom = salome.IDToObject(curveID)
     if str(curveGeom.GetShapeType()) == "EDGE":
@@ -127,7 +127,7 @@ def get_edges(curveID:str):
     return listEdge
 
 
-@reloading
+#@reloading
 def points_of_interest(fabMode:int, curveLength:float, startingDistance:float, endingDistance:float, increment:float, edgeList:list):
     pointsOfInterest = cls_points_of_interest(startingDistance, curveLength-endingDistance, edgeList)
     distOnWire = startingDistance
@@ -180,7 +180,7 @@ def nb_points_and_step(actualPointDistOnCurve:float, goalPointDistOnCurve:float,
     return nbPoints, newIncr
 
 
-@reloading
+#@reloading
 def gen_points(curve:cls_curve, PtsOI:cls_points_of_interest, fabricationMode:int, surfaceGeom, UiProgressBar, secuOption:bool, clearOption:bool, securityGeom, uiLabel):
     curveGeom = salome.IDToObject(curve.curveId)
     speed = speed_selector(MACHINING, fabricationMode)
@@ -228,7 +228,7 @@ def speed_selector(moveType:int , fabricationMode:int, stopCondition=False):
                 return dataStruct.machineParam.generics.toolSpeed
 
 
-@reloading
+#@reloading
 def create_point(curve:cls_curve, curveGeom, POI:cls_points_of_interest.info_point, speed, fabricationMode:int, surfaceGeom, PtsOI:cls_points_of_interest, UiProgressBar, uiLabel):
     try :
         vertexGeom = point_on_edge(POI.distOnEdge, POI.edgeGeom)
@@ -266,7 +266,7 @@ def get_face(vertexGeom, surfaceGeom):
     return geompy.GetFaceNearPoint(surfaceGeom, vertexGeom)
 
 
-@reloading
+#@reloading
 def gen_vectors(faceGeom, vertexGeom, POI:cls_points_of_interest.info_point, vertexEntry):
     nVector, normGeom = normal_vector(faceGeom, vertexGeom)
     #tVector, tanGeom = tangent_vector(POI.edgeGeom, POI.distOnWire)
@@ -290,7 +290,7 @@ def normal_vector(surfaceGeom, vertexGeom):
     return dataVector, vectGeom
 
 
-@reloading
+#@reloading
 def tangent_vector(curveGeom, distanceOnCurve:float):
     vectGeom = geompy.MakeTangentOnCurve(curveGeom, distanceOnCurve)
     dataVector = vector_to_data(vectGeom)
@@ -324,7 +324,7 @@ def vector_to_data(vectGeom):
     return dataVector
 
 
-@reloading
+#@reloading
 #def check_orthogonality(vertexGeom, point:cls_point):
 def check_orthogonality(norm:cls_vector, tan:cls_vector, vertexEntry:str):#, vertexGeom, dataPoint:cls_point):
     angle, cosa = vectors_angle(norm, tan)
@@ -356,7 +356,7 @@ def delete_geom(geomList):
     return
 
 
-@reloading
+#@reloading
 def approach_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOption:bool, securityGeom, vertexGeom, curveGeom, fabMode:int):
     secuPoint = None
     clearPoint = None
@@ -381,7 +381,7 @@ def retract_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOptio
     return secuPoint, clearPoint
 
 
-@reloading
+#@reloading
 def clear_point(curve:cls_curve, point:cls_point, moveType:int, fabMode:int, curveGeom):
     entry, coordinates = clear_offset(point, curveGeom, moveType_interpreter(moveType))
     speed = speed_selector(moveType, fabMode)
@@ -406,7 +406,7 @@ def offset_point(point:cls_point, distance:float):
     return cls_coordinates([ofX, ofY, ofZ])
 
 
-@reloading
+#@reloading
 def security_point(existingPoint:cls_point, curve:cls_curve, vertexGeom, curveGeom, securityGeom, fabMode):
     if securityGeom == None:
         return None

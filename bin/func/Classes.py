@@ -1,7 +1,7 @@
 """Structure de données des éléments pour l'utilisation du slicer 6 axes et leur sauvegarde
 """
 from .errors import Unfound_edge
-from ToolPathWizard_dev.lib.reloading import reloading
+#from ToolPathWizard_dev.lib.reloading import reloading
 
 ###__________________________________________________________________________________________________________________________________________________________________
 class cls_generic:
@@ -265,7 +265,7 @@ class cls_points_of_interest:
             self.stop = stop
             self.increment = increment  #Increment from last point #mm
         
-        @reloading
+        #@reloading
         def get_edge_for_distance(self, edgeList:list):
             distRange = 0   #Distance to the end of the current edge
             edge:cls_edge
