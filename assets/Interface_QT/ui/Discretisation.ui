@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog_discretisation</class>
+ <widget class="QDialog" name="Dialog_discretisation">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>490</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="labelTitle_points">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>500</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS Shell Dlg 2</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#3366cc;&quot;&gt;Générateur de points de passage&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>469</width>
+     <height>454</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout_avoidAndParameters">
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_parametersValidation">
+        <property name="text">
+         <string>&lt;span&gt; &amp;#x2714; &lt;span&gt; Paramètres machine validés</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBox_approach_retract">
+        <property name="text">
+         <string>Générer les points d'approche et de retrait</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_machineParameters">
+        <property name="text">
+         <string>Paramètres machine</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="checkBox_avoidingVolume">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Générer les points sur la surface de sécurité</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_userEntry">
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_securityFaceEntry">
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_securityFaceValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_discretisationStep">
+        <property name="text">
+         <string>Interval de discrétisation [mm]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="lineEdit_discretisationStep"/>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_selectSecurityFace">
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_layersValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_layers">
+        <property name="text">
+         <string>Couches de travail (groupe)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_discretisationStepValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_SecurityFace">
+        <property name="text">
+         <string>Surface ou volume de sécurité pour évitement (Face)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_selectLayers">
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_layersEntry">
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_validateReturn">
+      <item>
+       <widget class="QPushButton" name="pushButton_validation">
+        <property name="text">
+         <string>Valider</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_return">
+        <property name="text">
+         <string>Retour</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_lay">
+      <property name="text">
+       <string>Layers :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar_lay">
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_curves">
+      <property name="text">
+       <string>Curves :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar_curves">
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_pts">
+      <property name="text">
+       <string>Points :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar_pts">
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>checkBox_approach_retract</tabstop>
+  <tabstop>checkBox_avoidingVolume</tabstop>
+  <tabstop>pushButton_selectLayers</tabstop>
+  <tabstop>lineEdit_discretisationStep</tabstop>
+  <tabstop>pushButton_selectSecurityFace</tabstop>
+  <tabstop>pushButton_validation</tabstop>
+  <tabstop>pushButton_return</tabstop>
+  <tabstop>pushButton_machineParameters</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_selectLayers</sender>
+   <signal>clicked()</signal>
+   <receiver>label_layersValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectLayers</sender>
+   <signal>clicked()</signal>
+   <receiver>label_layersEntry</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_discretisationStep</sender>
+   <signal>editingFinished()</signal>
+   <receiver>label_discretisationStepValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectSecurityFace</sender>
+   <signal>clicked()</signal>
+   <receiver>label_securityFaceValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectSecurityFace</sender>
+   <signal>clicked()</signal>
+   <receiver>label_securityFaceEntry</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar_pts</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>491</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_machineParameters</sender>
+   <signal>clicked()</signal>
+   <receiver>label_parametersValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>368</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>label_lay</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>323</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>39</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar_lay</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>88</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>label_curves</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>88</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>413</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar_curves</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>438</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validation</sender>
+   <signal>clicked()</signal>
+   <receiver>label_pts</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>128</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

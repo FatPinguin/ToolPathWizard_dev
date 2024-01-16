@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog_operations</class>
+ <widget class="QDialog" name="Dialog_operations">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>360</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="labelTitle_operationsGenerator">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>500</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS Shell Dlg 2</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#3366cc;&quot;&gt;Générateur d'opération&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>461</width>
+     <height>295</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QComboBox" name="comboBox_fabricationMode">
+        <item>
+         <property name="text">
+          <string>Choisir un mode de fabrication</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Générique (point)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pellet fdm contour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Peller fdm remplissage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Filament fdm contour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Filament fdm remplissage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Usinage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dépose de bande air</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dépose de bande laser</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_userEntries">
+      <item row="8" column="2">
+       <widget class="QLabel" name="label_cuttingToolEntry">
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="7" column="2">
+       <widget class="QPushButton" name="pushButton_selectCuttingTool">
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLabel" name="label_layersEntry">
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_layers">
+        <property name="text">
+         <string>Couches de travail (groupe)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QLabel" name="label_cuttingToolValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="pushButton_selectLayers">
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_layersValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBox_partialSurfaceSelectionOption">
+        <property name="text">
+         <string>(Option) générer la trajectoire sur les couches :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_cuttingTool">
+        <property name="text">
+         <string>Outil de coupe (groupe)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QRadioButton" name="radioButton_even">
+          <property name="text">
+           <string>Paires</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_uneven">
+          <property name="text">
+           <string>Impaires</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="checkBox_toolPositioning">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Generate points for tool positioning</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="Line" name="line_toolPos">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_validateReturn">
+      <item>
+       <widget class="QPushButton" name="pushButton_Validation">
+        <property name="text">
+         <string>Valider</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_return">
+        <property name="text">
+         <string>Retour</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>pushButton_Validation</tabstop>
+  <tabstop>pushButton_return</tabstop>
+  <tabstop>comboBox_fabricationMode</tabstop>
+  <tabstop>checkBox_partialSurfaceSelectionOption</tabstop>
+  <tabstop>radioButton_even</tabstop>
+  <tabstop>radioButton_uneven</tabstop>
+  <tabstop>pushButton_selectLayers</tabstop>
+  <tabstop>pushButton_selectCuttingTool</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_Validation</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_fabricationMode</sender>
+   <signal>activated(QString)</signal>
+   <receiver>pushButton_Validation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>193</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectLayers</sender>
+   <signal>clicked()</signal>
+   <receiver>label_layersValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectCuttingTool</sender>
+   <signal>clicked()</signal>
+   <receiver>label_cuttingToolValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectLayers</sender>
+   <signal>clicked()</signal>
+   <receiver>label_layersEntry</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectCuttingTool</sender>
+   <signal>clicked()</signal>
+   <receiver>label_cuttingToolEntry</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
