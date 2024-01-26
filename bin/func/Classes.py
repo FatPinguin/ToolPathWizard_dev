@@ -61,7 +61,7 @@ class cls_laser_tape:
         #self.tapeFeed = None
         self.feedSpeed = 30#None
         #self.laserState = None
-        self.laserPower = 20    #%
+        self.laserPower = 10    #%
         #self.cutFlag = None
         self.offset = 0 #mm Negative = compression / positive = spacing
         self.incr = 1   #mm

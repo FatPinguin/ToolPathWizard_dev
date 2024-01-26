@@ -373,7 +373,7 @@ def retract_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOptio
     secuPoint = None
     clearPoint = None
     if clearOption:
-        clearPoint = clear_point(curve, point, APPROACH, fabMode, curveGeom)
+        clearPoint = clear_point(curve, point, RETRACT, fabMode, curveGeom)
         #curve.add_point_to_curve(clearPoint)
     if secuOption:
         secuPoint = security_point(clearPoint, curve, vertexGeom, curveGeom, securityGeom, fabMode)

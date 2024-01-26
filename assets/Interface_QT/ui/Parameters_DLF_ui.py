@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui\Parameters.ui'
+# Form implementation generated from reading ui file 'c:\Users\Max\.config\salome\Plugins\ToolPathWizard_dev\assets\Interface_QT\ui\Parameters_DLF.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -154,7 +154,7 @@ class Ui_Dialog_parameters(object):
         self.gridLayout_6.addItem(spacerItem3, 6, 0, 1, 1)
         self.toolBox.addItem(self.FDM_pellet, "")
         self.FDM_filament = QtWidgets.QWidget()
-        self.FDM_filament.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.FDM_filament.setGeometry(QtCore.QRect(0, 0, 459, 346))
         self.FDM_filament.setObjectName("FDM_filament")
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.FDM_filament)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(30, 0, 431, 341))
@@ -204,7 +204,7 @@ class Ui_Dialog_parameters(object):
         self.gridLayout_2.addItem(spacerItem5, 6, 0, 1, 1)
         self.toolBox.addItem(self.FDM_filament, "")
         self.Milling = QtWidgets.QWidget()
-        self.Milling.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.Milling.setGeometry(QtCore.QRect(0, 0, 459, 346))
         self.Milling.setObjectName("Milling")
         self.gridLayoutWidget_3 = QtWidgets.QWidget(self.Milling)
         self.gridLayoutWidget_3.setGeometry(QtCore.QRect(30, 0, 431, 341))
@@ -243,7 +243,7 @@ class Ui_Dialog_parameters(object):
         self.gridLayout_3.addItem(spacerItem7, 4, 0, 1, 1)
         self.toolBox.addItem(self.Milling, "")
         self.Air_tape = QtWidgets.QWidget()
-        self.Air_tape.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.Air_tape.setGeometry(QtCore.QRect(0, 0, 459, 346))
         self.Air_tape.setObjectName("Air_tape")
         self.gridLayoutWidget_4 = QtWidgets.QWidget(self.Air_tape)
         self.gridLayoutWidget_4.setGeometry(QtCore.QRect(30, 0, 421, 341))
@@ -409,13 +409,3 @@ class Ui_Dialog_parameters(object):
         self.label_minTrajLen.setText(_translate("Dialog_parameters", "Longueur minimum de trajectoire [mm]"))
         self.label_cutIncr.setText(_translate("Dialog_parameters", "Increment cutters [mm]"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.Laser_tape), _translate("Dialog_parameters", "Laser Assisted Fiber Placement"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog_parameters = QtWidgets.QDialog()
-    ui = Ui_Dialog_parameters()
-    ui.setupUi(Dialog_parameters)
-    Dialog_parameters.show()
-    sys.exit(app.exec_())

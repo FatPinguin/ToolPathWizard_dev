@@ -37,6 +37,7 @@ class tool_discretise:
         hide_object(self.barList, True)
         self.ui.checkBox_avoidingVolume.setDisabled(True)
         if cfrDlfVersion:
+            self.ui.checkBox_approach_retract.setChecked(True)
             self.increment = machineParameters.laserTape.incr
             self.ui.lineEdit_discretisationStep.setText(str(self.increment))
             selection_indicator(self.ui.label_discretisationStepValidation, True)
