@@ -84,6 +84,7 @@ def open_graph():
     try: 
         filepath, typ = QtWidgets.QFileDialog.getOpenFileName(None, 'Select [.csv] file' ,defaultDir ,"Data export slicer (*.csv)")
         df = read_file(filepath, fields=["X coord (mm)", "Y coord (mm)", "Z coord (mm)"])
+        print("Open graph")
         plot(df)
         #plt.close()
     except:

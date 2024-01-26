@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui\Parameters.ui'
+# Form implementation generated from reading ui file 'c:\Users\Max\.config\salome\Plugins\ToolPathWizard_dev\assets\Interface_QT\ui\Parameters.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -409,13 +409,3 @@ class Ui_Dialog_parameters(object):
         self.label_minTrajLen.setText(_translate("Dialog_parameters", "Longueur minimum de trajectoire [mm]"))
         self.label_cutIncr.setText(_translate("Dialog_parameters", "Increment cutters [mm]"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.Laser_tape), _translate("Dialog_parameters", "Laser Assisted Fiber Placement"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog_parameters = QtWidgets.QDialog()
-    ui = Ui_Dialog_parameters()
-    ui.setupUi(Dialog_parameters)
-    Dialog_parameters.show()
-    sys.exit(app.exec_())

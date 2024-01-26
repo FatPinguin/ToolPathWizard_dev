@@ -18,6 +18,7 @@ from .params_viz import tool_parameters
 from .tree_viz import tool_tree
 from .display_viz import display_objects_in_study
 from .reverse_viz import tool_reverse
+#from .graph_viz import fn
 
 from ..func.common_variables import SLICERVERSION, cfrDlfVersion
 from ..func.Classes import cls_data_structure
@@ -28,6 +29,7 @@ from ..func.visualise import open_graph
 
 class mainWindow(QObject):
     def __init__(self):
+        #fn()
         super(mainWindow,self).__init__()
         self.win = QtWidgets.QMainWindow()
         self.uiMenu = Ui_Dialog_home()
