@@ -2,6 +2,7 @@
 """
 from .errors import Unfound_edge
 #from ToolPathWizard_dev.lib.reloading import reloading
+import numpy as np
 
 ###__________________________________________________________________________________________________________________________________________________________________
 class cls_generic:
@@ -60,11 +61,11 @@ class cls_laser_tape:
         #self.tapeFeed = None
         self.feedSpeed = 30#None
         #self.laserState = None
-        self.laserPower = 80
+        self.laserPower = 20    #%
         #self.cutFlag = None
         self.offset = 0 #mm Negative = compression / positive = spacing
         self.incr = 1   #mm
-        self.layIncr = 0.135    #mm
+        self.layIncr = 0.145    #mm
         self.cutIncr = 3    #mm
 
 class cls_air_tape:
@@ -268,15 +269,16 @@ class cls_points_of_interest:
         #@reloading
         def get_edge_for_distance(self, edgeList:list):
             distRange = 0   #Distance to the end of the current edge
+            tol = np.single(1E-3)
             edge:cls_edge
             for edge in edgeList:
                 distFromLast = distRange
                 distRange += edge.length
-                if self.distOnWire <= distRange:
+                if self.distOnWire <= (distRange+tol):
                     edgeGeom = edge.geom
                     distOnEdge = self.distOnWire - distFromLast
                     return distOnEdge, edgeGeom
-            raise Unfound_edge(f"No edge found for {self.distOnWire}mm on wire")
+            raise Unfound_edge(f"No edge found for {self.distOnWire}mm on wire. Range of search {distRange}mm")
 
 ###__________________________________________________________________________________________________________________________________________________________________
 def default_machine_settings():
