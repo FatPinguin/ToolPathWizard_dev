@@ -59,7 +59,7 @@ class cls_laser_tape:
         #self.preStartDist = 5 #mm : dépacement 5mm avant le 1er point d'une courbe
         #self.preStart = True
         #self.tapeFeed = None
-        self.feedSpeed = 30#None
+        #self.feedSpeed = 30#None
         #self.laserState = None
         self.laserPower = 10    #%
         #self.cutFlag = None

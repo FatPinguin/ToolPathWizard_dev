@@ -126,7 +126,6 @@ def create_dict_of_toolstruct_for_json_dump(param:cls_machine_parameters):
             'laserStartingDistance' : param.laserTape.laserStartingDistance,
             'laserStopingDistance' : param.laserTape.laserStopingDistance,
             'cuttingDistance' : param.laserTape.cuttingDistance,
-            'feedSpeed' : param.laserTape.feedSpeed,
             'laserPower' : param.laserTape.laserPower,
             'offset' : param.laserTape.offset,
             'incr' : param.laserTape.incr,
@@ -253,7 +252,6 @@ def import_dict_tool_in_tool_struct(dataStruct:cls_data_structure, dictDataStruc
     dataStruct.machineParam.laserTape.laserStartingDistance = dictDataStruct['Machine parameters']['Laser Tape']['laserStartingDistance']
     dataStruct.machineParam.laserTape.laserStopingDistance = dictDataStruct['Machine parameters']['Laser Tape']['laserStopingDistance']
     dataStruct.machineParam.laserTape.cuttingDistance = dictDataStruct['Machine parameters']['Laser Tape']['cuttingDistance']
-    dataStruct.machineParam.laserTape.feedSpeed = dictDataStruct['Machine parameters']['Laser Tape']['feedSpeed']
     dataStruct.machineParam.laserTape.laserPower = dictDataStruct['Machine parameters']['Laser Tape']['laserPower']
     dataStruct.machineParam.laserTape.offset = dictDataStruct['Machine parameters']['Laser Tape']['offset']
     dataStruct.machineParam.laserTape.incr = dictDataStruct['Machine parameters']['Laser Tape']['incr']

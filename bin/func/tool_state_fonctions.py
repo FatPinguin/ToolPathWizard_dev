@@ -28,6 +28,7 @@ def tool_head_state(fabricationMode:int, moveType:int, increment:int, curveLengt
 def generic_tool_state():
     return []
 
+
 def fdm_infill_tool_state(moveType:int, increment:float):
     #[relative filament fee (mm) -> incremental; filament feed speed (mm/s), part cooling (bool), extruder temp (°C)]    pass
     extruderTemp = dataStruct.machineParam.fdmFilament.extruderTemp
@@ -40,6 +41,7 @@ def fdm_infill_tool_state(moveType:int, increment:float):
     elif moveType == RETRACT or moveType == TRAVEL :
         return [0,0,false,extruderTemp]
 
+
 def fdm_perimeter_tool_state(moveType:int, increment:float):
     #[relative filament fee (mm) -> incremental; filament feed speed (mm/s), part cooling (bool), extruder temp (°C)]    pass
     extruderTemp = dataStruct.machineParam.fdmFilament.extruderTemp
@@ -50,6 +52,7 @@ def fdm_perimeter_tool_state(moveType:int, increment:float):
         return [0,0,false,extruderTemp]
     elif moveType == RETRACT or moveType == TRAVEL :
         return [0,0,false,extruderTemp]
+
 
 def fdm_pellet_infill_tool_state(moveType:int, distanceOnCurve:float, curveLength:float):
     #[extruder state (bool); extrusion direction(bool); extrudeur temp (°C); extrudeur speed (mm/s)]
@@ -73,6 +76,7 @@ def fdm_pellet_infill_tool_state(moveType:int, distanceOnCurve:float, curveLengt
         pull = 0
     return [extrSpeed, extrTemp, extrude, pull, 0, 0]
 
+
 def fdm_pellet_perimeter_tool_state(moveType:int, distanceOnCurve:float, curveLength:float):
     extrTemp = dataStruct.machineParam.fdmPellet.extruderTemp
     extrSpeed = dataStruct.machineParam.fdmPellet.screwSpeed
@@ -94,6 +98,7 @@ def fdm_pellet_perimeter_tool_state(moveType:int, distanceOnCurve:float, curveLe
         pull = 0
     return [extrSpeed, extrTemp, extrude, pull, 0, 0]
 
+
 def milling_tool_state(moveType:int):
     #[spindle state (bool); spindle speed (rev/min)]
     if moveType == MACHINING : #ajouter ici les actions en un point
@@ -102,6 +107,7 @@ def milling_tool_state(moveType:int):
         return [true, dataStruct.machineParam.milling.spindleSpeed]
     elif moveType == RETRACT or moveType == TRAVEL :
         return [false, 0]
+
 
 #old
 #def laser_tape_tool_state(moveType:int, increment:float, distanceOnCurve:float, curveLength:float, isFirstPoint):
@@ -126,6 +132,7 @@ def milling_tool_state(moveType:int):
 #            return [increment, tapeFeedSpeed, false, 0, false]
 #    elif moveType == APPROACH or moveType == RETRACT :
 #        return [0, 0, false, 0, false]
+
 
 def laser_tape_tool_state(moveType:int, increment:float, distanceOnCurve:float, curveLength:float):
     #[Tape feed (mm); tape feed speed (mm/s); laser state (on/off); laser power (w); cut flag (bool)]
