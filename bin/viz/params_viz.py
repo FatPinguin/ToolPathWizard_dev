@@ -66,7 +66,6 @@ class tool_parameters:
         
         env.dataStruct.machineParam.laserTape.toolSpeed = float(self.ui.lineEdit_laserTape_toolSpeed.text())
         env.dataStruct.machineParam.laserTape.laserPower = float(self.ui.lineEdit_laserTape_laserPower.text())
-        env.dataStruct.machineParam.laserTape.feedSpeed = float(self.ui.lineEdit_feedSpeed.text())
         env.dataStruct.machineParam.laserTape.minimumTrajectoryLength = float(self.ui.lineEdit_minTrajLen.text())
         env.dataStruct.machineParam.laserTape.offset = float(self.ui.lineEdit_offset.text())
         env.dataStruct.machineParam.laserTape.incr = float(self.ui.lineEdit_incr.text())

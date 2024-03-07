@@ -39,7 +39,6 @@
             "laserStartingDistance": 5,
             "laserStopingDistance": 5,
             "cuttingDistance": 44,
-            "feedSpeed": 30,
             "laserPower": 80.0,
             "offset": 0,
             "incr": 1,

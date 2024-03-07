@@ -28,7 +28,7 @@ if cfrDlfVersion: #operationIsTape:
                   "Distance on curve (mm)", "Total distance (mm) (only active passes)", "Speed (mm/s)", "Stop flag: continuous/stop here (0/1)",
                   "Laser state: off/on (0/1)", "Laser power (laser controller units)", "Cut flag: idle/cut (0/1)", "Aux output 1 (*)", "Version %s"%(SLICERVERSION)]
 else:
-    fieldnames = ["Operation id", "Instruction", "Operation type", "Layer id", "Curve id", "Point id",
+    fieldNames = ["Operation id", "Instruction", "Operation type", "Layer id", "Curve id", "Point id",
                   "X coord (mm)", "Y coord (mm)", "Z coord (mm)",
                   "Tangent vector X (mm)", "Tangent vector Y (mm)", "Tangent vector Z (mm)", 
                   "Normal vector X (mm)", "Normal vector Y (mm)", "Normal vector Z (mm)", 

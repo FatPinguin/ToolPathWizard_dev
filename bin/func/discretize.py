@@ -4,7 +4,7 @@ import numpy as np
 from .Classes import cls_surfaces_grp, cls_surface, cls_operation, cls_curve, cls_point, cls_coordinates, cls_vector, cls_edge, cls_points_of_interest
 from .environment import geompy, salome, dataStruct
 from .tool_state_fonctions import tool_head_state
-from .common_variables import MACHINING, APPROACH, RETRACT, TRAVEL, WAIT, fdmPerimeter, fdmInfill, milling, tapeLayingAirPulse, tapeLayingLaser, fdmPelletPerimeter, fdmPelletInfill, fdmFiberInfill, fdmFiberPerimeter, generic
+from .common_variables import doNotPublishPointInStudy, MACHINING, APPROACH, RETRACT, TRAVEL, WAIT, fdmPerimeter, fdmInfill, milling, tapeLayingAirPulse, tapeLayingLaser, fdmPelletPerimeter, fdmPelletInfill, fdmFiberInfill, fdmFiberPerimeter, generic
 from .errors import Unfound_edge, Point_creation_error, Orthogonality_error
 from .export import moveType_interpreter
 from ..viz.user_com import update_progressBar_and_label
@@ -22,6 +22,7 @@ def discretisation_tool(dataLayerGroup:cls_surfaces_grp, increment:float, UiPBar
     dataCurve:cls_curve
     layerCount = 0
     nbLayers = len(dataLayerGroup.surfaceList)
+    #print("nbLays:",nbLayers)
     update_progressBar_and_label(UiPBarLay, uiLabLay, layerCount, nbLayers, "Layer")
     for dataLayer in dataLayerGroup.surfaceList:
         surfaceGeom, surfaceType = get_geom(dataLayer.surfaceId)
@@ -29,16 +30,22 @@ def discretisation_tool(dataLayerGroup:cls_surfaces_grp, increment:float, UiPBar
             startingDistance, endingDistance = __start_and_stop(dataOperation.fabricationMode)
             curveCount = 0
             nbCurves = len(dataOperation.curveList)
+            #print("nb curves :", nbCurves)
             update_progressBar_and_label(UiPBarCurves, uiLabCurves, curveCount, nbCurves, "Curve")
             for dataCurve in dataOperation.curveList:
                 #Check longueur minimale
+                #print("check")
                 if not verify_curve_length(dataCurve, dataOperation.fabricationMode, startingDistance, endingDistance):
                     continue #go to next curve, current curve will not be discretize
+                #print("checked")
                 #Extraire les edges et afficher si erreur
                 edgesList = get_edges(dataCurve.curveId)
+                #print("edge list", edgesList)
                 pointsOfInterest = points_of_interest(dataOperation.fabricationMode, dataCurve.curveLength, startingDistance, endingDistance, increment, edgesList)
+                #print("POI :", pointsOfInterest)
                 gen_points(dataCurve, pointsOfInterest, dataOperation.fabricationMode, surfaceGeom, UiPBarPts, secuOption, clearOption, securityGeom, uiLabPts)
                 curveCount += 1
+                #print("curve Count :", curveCount)
                 update_progressBar_and_label(UiPBarCurves, uiLabCurves, curveCount, nbCurves, "Curve")
                 #update_progressBar(UiPBarCurves, curveCount/nbCurves*100)   #TODO - Add curve bar
         #update_progressBar(UiPBarLay, layerCount/nbLayers*100)   #TODO - Add layers bar
@@ -94,17 +101,21 @@ def __ending_distance(fabricationMode:int):
 
 def verify_curve_length(dataCurve:cls_curve, fabMode:int, startingDistance:float, endingDistance:float):
     #TODO - Si return false : changer la couleur de la courbe et l'afficher + message erreur
-    if fabMode==tapeLayingLaser:
-        if dataCurve.curveLength < dataStruct.machineParam.laserTape.minimumTrajectoryLength:
-            print(f"Trajectory {dataCurve.curveId} is to short --> {dataCurve.curveLength}mm")
+    if fabMode==tapeLayingLaser or  fabMode == tapeLayingAirPulse:
+        if (dataCurve.curveLength < dataStruct.machineParam.laserTape.minimumTrajectoryLength) or (dataCurve.curveLength < dataStruct.machineParam.airTape.minimumTrajectoryLength):
+            if not doNotPublishPointInStudy:
+             print(f"Trajectory {dataCurve.curveId} is to short --> {dataCurve.curveLength}mm")
             #raise Curve_to_short(f"Trajectory {dataCurve.curveId} is to short --> {dataCurve.curveLength} mm")
             return False
-        elif dataCurve.curveLength < dataCurve.increment:
-            return False
-        elif dataCurve.curveLength < (startingDistance + endingDistance):
-            return False
-        else:
-            return True
+    if dataCurve.curveLength < dataCurve.increment:
+        if not doNotPublishPointInStudy:
+            print(f"Trajectory {dataCurve.curveId} is shorter than increment --> {dataCurve.increment}mm")
+        return False
+    elif dataCurve.curveLength < (startingDistance + endingDistance):
+        if not doNotPublishPointInStudy:
+            print(f"Trajectory {dataCurve.curveId} is to short. --> start dist + stop dist = {startingDistance + endingDistance}mm")
+        return False
+    return True
         
 
 #@reloading
@@ -143,6 +154,14 @@ def points_of_interest(fabMode:int, curveLength:float, startingDistance:float, e
         pointsOfInterest.add_point(laserOff, "laser off", edgeList, newIncr)
         distOnWire, newIncr = intermediates_points(pointsOfInterest, distOnWire, pointsOfInterest.stop.distOnWire, increment, edgeList)
         pointsOfInterest.stop.increment = newIncr
+    
+    elif fabMode == tapeLayingAirPulse:
+        cut = pointsOfInterest.stop.distOnWire - dataStruct.machineParam.airTape.cuttingDistance
+        distOnWire, newIncr = intermediates_points(pointsOfInterest, distOnWire, cut, increment, edgeList)
+        pointsOfInterest.add_point(cut, "cut", edgeList, newIncr)
+        distOnWire, newIncr = intermediates_points(pointsOfInterest, distOnWire, pointsOfInterest.stop.distOnWire, increment, edgeList)
+        pointsOfInterest.stop.increment = newIncr
+
     else :
         raise Exception("Add here points of interest for others tools") #TODO
     #TODO - Vérifier si besoin ou si interne à la classe suffit
@@ -242,7 +261,8 @@ def create_point(curve:cls_curve, curveGeom, POI:cls_points_of_interest.info_poi
         #curve.add_point_to_curve(point)
         #update_progressBar(UiProgressBar, PtsOI.count/PtsOI.nb*100)
         #check_orthogonality(vertexGeom, point)
-        update_progressBar_and_label(UiProgressBar, uiLabel, PtsOI.count, PtsOI.nb, "Point")
+        if not doNotPublishPointInStudy :
+            update_progressBar_and_label(UiProgressBar, uiLabel, PtsOI.count, PtsOI.nb, "Point")
         PtsOI.count +=1
     except Point_creation_error(f"Failed to create point at {POI.distOnWire}mm on curve {curve.curveId}"):
         pass
@@ -255,7 +275,10 @@ def point_on_edge(distOnEdge:float, edgeGeom):
 
 
 def add_to_study(curveGeom, vertexGeom, descriptor):
-    entry = geompy.addToStudyInFather(curveGeom, vertexGeom, f"Point_{descriptor}")
+    if doNotPublishPointInStudy:
+        entry = "Unpublished"
+    else :
+        entry = geompy.addToStudyInFather(curveGeom, vertexGeom, f"Point_{descriptor}")
     coordinates = cls_coordinates(geompy.PointCoordinates(vertexGeom))
     return entry, coordinates
 
@@ -276,7 +299,8 @@ def gen_vectors(faceGeom, vertexGeom, POI:cls_points_of_interest.info_point, ver
         tVector, tanGeom = tangent_vector(POI.edgeGeom, POI.distOnWire)
         if check_orthogonality(nVector, tVector, vertexEntry):
             print("Tangent vector defect")
-            show_item_colorized(vertexEntry)
+            if not doNotPublishPointInStudy:
+                show_item_colorized(vertexEntry)
             angle, cosa = vectors_angle(nVector, tVector)
             raise Orthogonality_error(f"The angle between the vectors at point {vertexEntry} is {round(angle,3)}deg.")
         else:
@@ -364,8 +388,10 @@ def approach_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOpti
         secuPoint = security_point(point, curve, vertexGeom, curveGeom, securityGeom, fabMode)
         #curve.add_point_to_curve(secuPoint)
     if clearOption:
-        clearPoint = clear_point(curve, point, APPROACH, fabMode, curveGeom)
+        clearPoint = clear_point(curve, point, APPROACH, fabMode, curveGeom, distOnApproach=0)
         #curve.add_point_to_curve(clearPoint)
+        #if fabMode == tapeLayingAirPulse:
+        #    intPtsLst = inter_points(curve, clearPoint, APPROACH, fabMode)
     return secuPoint, clearPoint
 
 
@@ -373,6 +399,8 @@ def retract_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOptio
     secuPoint = None
     clearPoint = None
     if clearOption:
+        #if fabMode == tapeLayingAirPulse:
+        #    intPtsLst = inter_points(curve, point, RETRACT, fabMode)
         clearPoint = clear_point(curve, point, RETRACT, fabMode, curveGeom)
         #curve.add_point_to_curve(clearPoint)
     if secuOption:
@@ -382,13 +410,17 @@ def retract_points(curve:cls_curve, point:cls_point, secuOption:bool, clearOptio
 
 
 #@reloading
-def clear_point(curve:cls_curve, point:cls_point, moveType:int, fabMode:int, curveGeom):
+def clear_point(curve:cls_curve, point:cls_point, moveType:int, fabMode:int, curveGeom, distOnApproach:float=None):
     entry, coordinates = clear_offset(point, curveGeom, moveType_interpreter(moveType))
     speed = speed_selector(moveType, fabMode)
-    ths = tool_head_state(fabMode, moveType, 0, curve.curveLength, point.distanceOnCurve)
+    ths = tool_head_state(fabMode, moveType, 0, curve.curveLength, point.distanceOnCurve, distOnApproach)
     clearPoint = cls_point(coordinates, entry, point.distanceOnCurve, moveType, None, 
                       point.normalVector, point.tangentialVector, ths, speed, True, 0)
+    if moveType == RETRACT and fabMode == tapeLayingAirPulse:
+        intPtsLst = inter_points(curve, point, moveType, fabMode)
     curve.add_point_to_curve(clearPoint)
+    if moveType == APPROACH and fabMode == tapeLayingAirPulse:
+            intPtsLst = inter_points(curve, clearPoint, moveType, fabMode)
     return clearPoint
 
 
@@ -404,6 +436,28 @@ def offset_point(point:cls_point, distance:float):
     ofY = point.coordinates.y + point.normalVector.vy * distance
     ofZ = point.coordinates.z + point.normalVector.vz * distance
     return cls_coordinates([ofX, ofY, ofZ])
+
+
+def inter_points(curve:cls_curve, oriPoint:cls_point, moveType:int, fabMode:int):
+    interPointList = []
+    nbInterPts = round(dataStruct.machineParam.generics.securityDistance / dataStruct.machineParam.airTape.securityDiscretisation)
+    if nbInterPts > 1:
+        secuDiscr = dataStruct.machineParam.generics.securityDistance / nbInterPts
+        if moveType == APPROACH : 
+            secuDiscr = -secuDiscr  #Negative distance
+        for i in range(1, nbInterPts): #first point already created
+            distOnApproach = i*secuDiscr
+            coordinates = offset_point(oriPoint, distOnApproach)
+            speed = speed_selector(moveType, fabMode)
+            if moveType == APPROACH:
+                distOnApproach = -distOnApproach
+            ths = tool_head_state(fabMode, moveType, secuDiscr, curve.curveLength, None, distOnApproach)
+            print(f"dstOAp {distOnApproach} THS ",ths)
+            interPoint = cls_point(coordinates, None, 0, moveType, None, 
+                                   oriPoint.normalVector, oriPoint.tangentialVector, ths, speed, True, 0)
+            curve.add_point_to_curve(interPoint)
+            interPointList.append(interPoint)
+    return interPointList
 
 
 #@reloading
@@ -423,7 +477,11 @@ def security_point(existingPoint:cls_point, curve:cls_curve, vertexGeom, curveGe
 def publish_vectors(vertexGeom, dataPoint:cls_point):
     vNorm = geompy.MakeVector(vertexGeom, geompy.MakeVertex(dataPoint.coordinates.x + dataPoint.normalVector.vx, dataPoint.coordinates.y + dataPoint.normalVector.vy, dataPoint.coordinates.z + dataPoint.normalVector.vz)) #geompy.MakeVectorDXDYDZ(dataNormalVector.vx, dataNormalVector.vy, dataNormalVector.vz)
     vTang = geompy.MakeVector(vertexGeom, geompy.MakeVertex(dataPoint.coordinates.x + dataPoint.tangentialVector.vx, dataPoint.coordinates.y + dataPoint.tangentialVector.vy, dataPoint.coordinates.z + dataPoint.tangentialVector.vz)) #geompy.MakeVectorDXDYDZ(dataTangentialVector.vx, dataTangentialVector.vy, dataTangentialVector.vz)
-    vNormEntry = geompy.addToStudyInFather(vertexGeom, vNorm, "vNorm")
-    vTangEntry = geompy.addToStudyInFather(vertexGeom, vTang, "vTang")
+    if not doNotPublishPointInStudy:
+        vNormEntry = geompy.addToStudyInFather(vertexGeom, vNorm, "vNorm")
+        vTangEntry = geompy.addToStudyInFather(vertexGeom, vTang, "vTang")
+    else :
+        vNormEntry = "Unpublished"
+        vTangEntry = "Unpublished"
     return vNormEntry, vTangEntry
 

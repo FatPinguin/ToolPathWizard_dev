@@ -126,7 +126,6 @@ def create_dict_of_toolstruct_for_json_dump(param:cls_machine_parameters):
             'laserStartingDistance' : param.laserTape.laserStartingDistance,
             'laserStopingDistance' : param.laserTape.laserStopingDistance,
             'cuttingDistance' : param.laserTape.cuttingDistance,
-            'feedSpeed' : param.laserTape.feedSpeed,
             'laserPower' : param.laserTape.laserPower,
             'offset' : param.laserTape.offset,
             'incr' : param.laserTape.incr,
@@ -134,11 +133,13 @@ def create_dict_of_toolstruct_for_json_dump(param:cls_machine_parameters):
             'cutIncr' : param.laserTape.cutIncr
         },
         'Air Tape' : {
+            'minimumTrajectoryLength' : param.airTape.minimumTrajectoryLength,
             'toolSpeed' : param.airTape.toolSpeed,
             'airStartingDistance' : param.airTape.airStartingDistance,
-            'airStopingDistance' : param.airTape.airStopingDistance,
+            'rollerDownDistance' : param.airTape.rollerDownDistance,
             'cuttingDistance' : param.airTape.cuttingDistance,
-            'feedSpeed' : param.airTape.feedSpeed,
+            'feedRate' : param.airTape.feedRate,
+            'securityDiscretisation' : param.airTape.securityDiscretisation
         } 
     }
     return dictMachineParam
@@ -251,18 +252,19 @@ def import_dict_tool_in_tool_struct(dataStruct:cls_data_structure, dictDataStruc
     dataStruct.machineParam.laserTape.laserStartingDistance = dictDataStruct['Machine parameters']['Laser Tape']['laserStartingDistance']
     dataStruct.machineParam.laserTape.laserStopingDistance = dictDataStruct['Machine parameters']['Laser Tape']['laserStopingDistance']
     dataStruct.machineParam.laserTape.cuttingDistance = dictDataStruct['Machine parameters']['Laser Tape']['cuttingDistance']
-    dataStruct.machineParam.laserTape.feedSpeed = dictDataStruct['Machine parameters']['Laser Tape']['feedSpeed']
     dataStruct.machineParam.laserTape.laserPower = dictDataStruct['Machine parameters']['Laser Tape']['laserPower']
     dataStruct.machineParam.laserTape.offset = dictDataStruct['Machine parameters']['Laser Tape']['offset']
     dataStruct.machineParam.laserTape.incr = dictDataStruct['Machine parameters']['Laser Tape']['incr']
     dataStruct.machineParam.laserTape.layIncr = dictDataStruct['Machine parameters']['Laser Tape']['layIncr']
     dataStruct.machineParam.laserTape.cutIncr = dictDataStruct['Machine parameters']['Laser Tape']['cutIncr']
     ###Air tape
+    dataStruct.machineParam.airTape.minimumTrajectoryLength = dictDataStruct['Machine parameters']['Air Tape']['minimumTrajectoryLength']
     dataStruct.machineParam.airTape.toolSpeed = dictDataStruct['Machine parameters']['Air Tape']['toolSpeed']
     dataStruct.machineParam.airTape.airStartingDistance = dictDataStruct['Machine parameters']['Air Tape']['airStartingDistance']
-    dataStruct.machineParam.airTape.airStopingDistance = dictDataStruct['Machine parameters']['Air Tape']['airStopingDistance']
+    dataStruct.machineParam.airTape.rollerDownDistance = dictDataStruct['Machine parameters']['Air Tape']['rollerDownDistance']
     dataStruct.machineParam.airTape.cuttingDistance = dictDataStruct['Machine parameters']['Air Tape']['cuttingDistance']
-    dataStruct.machineParam.airTape.feedSpeed = dictDataStruct['Machine parameters']['Air Tape']['feedSpeed']
+    dataStruct.machineParam.airTape.feedRate = dictDataStruct['Machine parameters']['Air Tape']['feedRate']
+    dataStruct.machineParam.airTape.securityDiscretisation = dictDataStruct['Machine parameters']['Air Tape']['securityDiscretisation']
     return
 
 
