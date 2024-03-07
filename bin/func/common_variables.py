@@ -6,12 +6,12 @@ defaultDir = "C:\\Salome-2019-w64-1.2\\WORK"
 
 
 #Constantes d'execution
-SLICERVERSION = '2.47'  #Last modification : 11/01/24 #Deploy : 11/01/24
-cfrDlfVersion = True   #False   #
+SLICERVERSION = '2.48'  #Last modification : 06/03/24 #Last deploy : 11/01/24
+cfrDlfVersion = False   #True   #
 operationIsTape = False
 operationIsPellet = False
 debugFlag = False
-doNotPublishPointInStudy = False#True   #Bug
+doNotPublishPointInStudy = True #False#True   #Bug
 
 
 #valeurs de communication :
