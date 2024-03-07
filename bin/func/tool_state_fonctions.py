@@ -167,23 +167,23 @@ def laser_tape_tool_state(moveType:int, increment:float, distanceOnCurve:float, 
 #        return [false, 0, false]
     
 
-def air_tape_tool_state_old(moveType:int, increment:float, distanceOnCurve:float, curveLength:float):
-    #[Tape feed (mm); tape feed speed (mm/s); heating state (bool); heater power (bool); cut flag (bool); roller pressure (bool)]
-    if moveType == MACHINING : #ajouter ici les actions en un point
-        tapeFeedSpeed = dataStruct.machineParam.airTape.feedRate
-        distTurnOnAir = dataStruct.machineParam.airTape.airStartingDistance
-        distCutTape = curveLength - dataStruct.machineParam.airTape.cuttingDistance
-        distTurnOffAir = curveLength - dataStruct.machineParam.airTape.airStopingDistance
-        if distanceOnCurve <= (distTurnOnAir - increment/2): #Dépose avant d'allumer l'air
-            return [increment, tapeFeedSpeed, false, false, false, false]
-        elif distanceOnCurve > (distTurnOnAir - increment/2) and distanceOnCurve <= (distTurnOffAir - increment/2) : #Dépose et laser ON
-            if distanceOnCurve > (distCutTape - increment/2) and distanceOnCurve <= (distCutTape + increment/2) : #Coupe la bande (1 point)
-                return [increment, tapeFeedSpeed, true, true, true, true]
-            return [increment, tapeFeedSpeed, true, true, false, true]
-        elif distanceOnCurve > (distTurnOffAir - increment/2) : #Extinction de l'air
-            return [increment, tapeFeedSpeed, false, false, false, true]
-    elif moveType == APPROACH or moveType == RETRACT or moveType == TRAVEL :
-        return [0, 0, false, false, false, false]
+#def air_tape_tool_state_old(moveType:int, increment:float, distanceOnCurve:float, curveLength:float):
+#    #[Tape feed (mm); tape feed speed (mm/s); heating state (bool); heater power (bool); cut flag (bool); roller pressure (bool)]
+#    if moveType == MACHINING : #ajouter ici les actions en un point
+#        tapeFeedSpeed = dataStruct.machineParam.airTape.feedRate
+#        distTurnOnAir = dataStruct.machineParam.airTape.airStartingDistance
+#        distCutTape = curveLength - dataStruct.machineParam.airTape.cuttingDistance
+#        distTurnOffAir = curveLength - dataStruct.machineParam.airTape.airStopingDistance
+#        if distanceOnCurve <= (distTurnOnAir - increment/2): #Dépose avant d'allumer l'air
+#            return [increment, tapeFeedSpeed, false, false, false, false]
+#        elif distanceOnCurve > (distTurnOnAir - increment/2) and distanceOnCurve <= (distTurnOffAir - increment/2) : #Dépose et laser ON
+#            if distanceOnCurve > (distCutTape - increment/2) and distanceOnCurve <= (distCutTape + increment/2) : #Coupe la bande (1 point)
+#                return [increment, tapeFeedSpeed, true, true, true, true]
+#            return [increment, tapeFeedSpeed, true, true, false, true]
+#        elif distanceOnCurve > (distTurnOffAir - increment/2) : #Extinction de l'air
+#            return [increment, tapeFeedSpeed, false, false, false, true]
+#    elif moveType == APPROACH or moveType == RETRACT or moveType == TRAVEL :
+#        return [0, 0, false, false, false, false]
     
 
 def air_tape_tool_state(moveType:int, distanceOnCurve:float, curveLength:float, distOnApproach:float):
