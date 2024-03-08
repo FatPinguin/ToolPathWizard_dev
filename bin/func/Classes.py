@@ -16,6 +16,7 @@ class cls_generic:
         self.retractSpeed = retractSpeed
         self.travelSpeed = travelSpeed
         self.securityDistance = securityDistance
+        self.incr = 1   #mm
         #self.stopFlag = stopFlag #TODO - clarifier ce flag. Le déterminer à l'export ?
 
 class cls_milling:
@@ -121,6 +122,7 @@ class cls_point :
         self.stopFlag:bool = stopFlag
         self.lstPtDist:float = newIncr  #Increment from last point to this point
         #self.incrToThisPoint = newIncr
+        self.pos7axis:float = 0
         self.ToolHeadState:list = ToolHeadState #list
     
     def __str__(self):

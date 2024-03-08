@@ -3,16 +3,22 @@ import csv
 
 from ..viz.user_com import message_error, update_progressBar
 from .Classes import cls_data_structure, cls_volume, cls_surfaces_grp, cls_surface, cls_operation, cls_curve, cls_point
-from .common_variables import SLICERVERSION, succes, fail, cfrDlfVersion, operationIsPellet, APPROACH, RETRACT, MACHINING, TRAVEL, WAIT, dictOfOperations
+from .common_variables import SLICERVERSION, succes, fail, cfrDlfVersion, operationIsPellet, APPROACH, RETRACT, MACHINING, TRAVEL, WAIT, dictOfOperations, tapeLayingLaser
 from .csv_headers import fabrication_header
 import ToolPathWizard_dev.bin.func.environment as env
+from .dlf7axis import dlf_7_axis_point_modification
 
 
-def export_tool(data:cls_data_structure, fileAdress:str, exportInfillBeforePerimeter:bool, UiProgressBar): #TODO - si milling export dans le sens inverse checkBox --> message attention lors de la création de l'opération: la surface choisie sera la première à etre usinée.
+def export_tool(data:cls_data_structure, fileAdress:str, exportInfillBeforePerimeter:bool, UiProgressBar, flag7axis, orthoVector=None): #TODO - si milling export dans le sens inverse checkBox --> message attention lors de la création de l'opération: la surface choisie sera la première à etre usinée.
     #Tri des opérations
     if data.sortedOperations == []:
         data.sortedOperations = data.generatedOperations
     sortedFabricationSteps, totalPointCounter, fabModes = __sort_operations(data)
+    #Traitement 7eme axe DLF
+    if flag7axis:
+        for fm in fabModes :
+            if fm == tapeLayingLaser :
+                dlf_7_axis_point_modification(sortedFabricationSteps, orthoVector)
     #Création des lignes à exporter
     exportLines, totalDistanceActive = write_points(sortedFabricationSteps, totalPointCounter, UiProgressBar)
     fieldNames = Field_names(fabModes)
@@ -359,7 +365,8 @@ def __format_data_in_string(dataPoint:cls_point, layerID:str, fabricationMode:in
         dataPoint.tangentialVector.vx, dataPoint.tangentialVector.vy, dataPoint.tangentialVector.vz,
         dataPoint.normalVector.vx, dataPoint.normalVector.vy, dataPoint.normalVector.vz,
         env.dataStruct.machineParam.generics.toolRotZ, env.dataStruct.machineParam.generics.toolTiltY,
-        env.dataStruct.machineParam.generics.axis7thPosition, env.dataStruct.machineParam.generics.axis7thSpeed,
+        #env.dataStruct.machineParam.generics.axis7thPosition, env.dataStruct.machineParam.generics.axis7thSpeed,
+        dataPoint.pos7axis, env.dataStruct.machineParam.generics.axis7thSpeed,
         dataPoint.distanceOnCurve, totalDistanceActive,
         #old
         #pointSpeed,

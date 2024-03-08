@@ -1,0 +1,18 @@
+open cmd inside folder (tap cmd in url)
+pyuic5 -x file_name.ui -o file_name.py
+pyuic5 -x .ui -o .py
+
+
+
+pyuic5 -x ui\Discretisation.ui -o Discretisation.py
+pyuic5 -x ui\Export.ui -o Export.py
+pyuic5 -x ui\Home.ui -o Home.py
+pyuic5 -x ui\Import_datastruct.ui -o Import_datastruct.py
+pyuic5 -x ui\Layers_creator.ui -o Layers_creator.py
+pyuic5 -x ui\Object_found_in_datastruct.ui -o Object_found_in_datastruct.py
+pyuic5 -x ui\Operation_generator.ui -o Operation_generator.py
+pyuic5 -x ui\Operations_tree.ui -o Operations_tree.py
+pyuic5 -x ui\Parameters.ui -o Parameters.py
+pyuic5 -x ui\Display_objects.ui -o Display_objects.py
+pyuic5 -x ui\Reverse.ui -o Reverse.py
+ 

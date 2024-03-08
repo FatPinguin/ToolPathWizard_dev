@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>500</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>600</width>
-    <height>500</height>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>600</width>
-    <height>500</height>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
      <x>20</x>
      <y>60</y>
      <width>561</width>
-     <height>441</height>
+     <height>631</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -60,6 +60,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QCheckBox" name="checkBox_infillBeforePerimeters">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Exporter les remplissages avant les contours</string>
         </property>
@@ -105,7 +108,7 @@
       <item row="1" column="1">
        <widget class="QLabel" name="label_point_entry">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
          <string>Entry:</string>
@@ -114,6 +117,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButton_load_change_tool_point">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -121,6 +127,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QCheckBox" name="checkBox_define_change_tool_point">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Définir un point de changement d'outil</string>
         </property>
@@ -172,6 +181,129 @@
        <widget class="QToolButton" name="toolButton_seletctPath">
         <property name="text">
          <string>...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_rotVect">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Vecteur normal à la table</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pushButton_rotVect">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLabel" name="label_rotVectValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBox_7axis_compilation">
+        <property name="text">
+         <string>DLF : Controle 7eme axe</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_rotVectEntry">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_orthoVectEntry">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Entry :</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_orthoVect">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Vecteur dans le plan de la table (vertical)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_orthoVect">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Selectionner</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_orthoVectValidation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>&lt;span style = 'font-size:20px'&gt; &amp;#129324;&lt;/span&gt;</string>
         </property>
        </widget>
       </item>
@@ -236,7 +368,7 @@
     <item>
      <widget class="QProgressBar" name="progressBar">
       <property name="value">
-       <number>24</number>
+       <number>0</number>
       </property>
      </widget>
     </item>
@@ -264,6 +396,9 @@
   <tabstop>pushButton_load_change_tool_point</tabstop>
   <tabstop>toolButton_seletctPath</tabstop>
   <tabstop>lineEdit_fileName</tabstop>
+  <tabstop>checkBox_7axis_compilation</tabstop>
+  <tabstop>pushButton_rotVect</tabstop>
+  <tabstop>pushButton_orthoVect</tabstop>
   <tabstop>tableWidget_operation</tabstop>
  </tabstops>
  <resources/>
@@ -275,12 +410,44 @@
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>448</y>
+     <x>152</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
-     <x>151</x>
-     <y>480</y>
+     <x>152</x>
+     <y>647</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_rotVect</sender>
+   <signal>clicked()</signal>
+   <receiver>label_rotVectValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>443</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_orthoVect</sender>
+   <signal>clicked()</signal>
+   <receiver>label_orthoVectValidation</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>343</y>
     </hint>
    </hints>
   </connection>
