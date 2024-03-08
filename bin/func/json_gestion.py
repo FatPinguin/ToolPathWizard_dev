@@ -59,6 +59,7 @@ def create_dict_of_datastruct_for_json_dump(studyAdress, dataStruct:cls_data_str
                                     'Stop flag' : point.stopFlag,
                                     'Speed' : point.speed,
                                     'Dist from last point' : point.lstPtDist,
+                                    '7th axis position' : point.pos7axis,
                                     'Tool head state' : point.ToolHeadState #dictToolHeadState,
                                 }
                             dictCurves['Trajectory %s'%(curve.curveId)] = {
@@ -96,7 +97,8 @@ def create_dict_of_toolstruct_for_json_dump(param:cls_machine_parameters):
             'approachSpeed' : param.generics.approachSpeed,
             'retractSpeed' : param.generics.retractSpeed,
             'travelSpeed' : param.generics.travelSpeed,
-            'securityDistance' : param.generics.securityDistance
+            'securityDistance' : param.generics.securityDistance,
+            'increment' : param.generics.incr
         },
         'FDM pellets' : {
             'screwSpeed' : param.fdmPellet.screwSpeed,
@@ -203,6 +205,7 @@ def convert_dict_to_data_structure(dictDataStruct:dict):
                                 point.stopFlag = dictPoint['Stop flag']
                                 point.speed = dictPoint['Speed']
                                 point.lstPtDist = dictPoint['Dist from last point']
+                                point.pos7axis = dictPoint['7th axis position']
                                 point.coordinates = cls_coordinates([dictPoint['Coordinates']['x'], dictPoint['Coordinates']['y'], dictPoint['Coordinates']['z']])
                                 point.normalVector = cls_vector([dictPoint['Normal vector']['vx'], dictPoint['Normal vector']['vy'], dictPoint['Normal vector']['vz']])
                                 point.tangentialVector = cls_vector([dictPoint['Tangential vector']['vx'], dictPoint['Tangential vector']['vy'], dictPoint['Tangential vector']['vz']])
@@ -227,6 +230,7 @@ def import_dict_tool_in_tool_struct(dataStruct:cls_data_structure, dictDataStruc
     dataStruct.machineParam.generics.retractSpeed = dictDataStruct['Machine parameters']['Generic']['retractSpeed']
     dataStruct.machineParam.generics.travelSpeed = dictDataStruct['Machine parameters']['Generic']['travelSpeed']
     dataStruct.machineParam.generics.securityDistance = dictDataStruct['Machine parameters']['Generic']['securityDistance']
+    dataStruct.machineParam.generics.incr = dictDataStruct['Machine parameters']['Generic']['increment']
     ###Pellets FDM
     dataStruct.machineParam.fdmPellet.screwSpeed = dictDataStruct['Machine parameters']['FDM pellets']['screwSpeed']
     dataStruct.machineParam.fdmPellet.infillSpeed = dictDataStruct['Machine parameters']['FDM pellets']['infillSpeed']

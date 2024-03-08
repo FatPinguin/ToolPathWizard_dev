@@ -119,10 +119,10 @@ class tool_create_operations:
         self.evenUnevenOption = False
 
     def __get_layer_group(self):
-        self.layerGroup, self.layerGroupId = selection_method(self.mainApp, self.ui.label_layersValidation, self.ui.label_layersEntry, groupType)
+        self.layerGroup, self.layerGroupId, check = selection_method(self.mainApp, self.ui.label_layersValidation, self.ui.label_layersEntry, groupType)
 
     def __get_cutting_tool_group(self):
-        self.cutterGroup, self.cutterGroupId = selection_method(self.mainApp, self.ui.label_cuttingToolValidation, self.ui.label_cuttingToolEntry, groupType)
+        self.cutterGroup, self.cutterGroupId, check = selection_method(self.mainApp, self.ui.label_cuttingToolValidation, self.ui.label_cuttingToolEntry, groupType)
 
     def __search_group_in_volumes(self, groupId:str):
         volume:cls_volume

@@ -41,6 +41,10 @@ class tool_discretise:
             self.increment = machineParameters.laserTape.incr
             self.ui.lineEdit_discretisationStep.setText(str(self.increment))
             selection_indicator(self.ui.label_discretisationStepValidation, True)
+        else:
+            self.increment = machineParameters.generics.incr
+            self.ui.lineEdit_discretisationStep.setText(str(self.increment))
+            selection_indicator(self.ui.label_discretisationStepValidation, True)
         return
     
 
@@ -61,7 +65,7 @@ class tool_discretise:
         
 
     def __get_layer_group_in_data(self):
-        layerGroup, layerGroupId = selection_method(self.mainApp, self.ui.label_layersValidation, self.ui.label_layersEntry, groupType)
+        layerGroup, layerGroupId, check = selection_method(self.mainApp, self.ui.label_layersValidation, self.ui.label_layersEntry, groupType)
         self.dataLayerGroup = search_group_in_volumes(layerGroupId[0])  #FIXME --> bug list indes out of range
         if self.dataLayerGroup == None:
             message_information_no_main("Group not found in data structure.")
@@ -89,7 +93,7 @@ class tool_discretise:
 
 
     def __get_security_geom(self):
-        securityGeomList, securityGeomIDList = selection_method(self.mainApp, self.ui.label_securityFaceValidation, self.ui.label_securityFaceEntry, securityType)
+        securityGeomList, securityGeomIDList, check = selection_method(self.mainApp, self.ui.label_securityFaceValidation, self.ui.label_securityFaceEntry, securityType)
         self.securityGeom = securityGeomList[0]
 
 

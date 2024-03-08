@@ -118,11 +118,11 @@ class tool_create_layersAndCutters:
 
 
     def __select_volume(self):
-        self.volumes, self.volumesIds = selection_method(self.mainApp, self.ui.label_volumValidation, self.ui.label_volumeEntry, volumesTypesList)
+        self.volumes, self.volumesIds, check = selection_method(self.mainApp, self.ui.label_volumValidation, self.ui.label_volumeEntry, volumesTypesList)
     
 
     def __select_surfaces(self):
-        self.shells, self.shellsIds = selection_method(self.mainApp, self.ui.label_surfaceValidation, self.ui.label_surfaceEntry, surfacesTypesList)
+        self.shells, self.shellsIds, check = selection_method(self.mainApp, self.ui.label_surfaceValidation, self.ui.label_surfaceEntry, surfacesTypesList)
         if len(self.shells)>1:
             shell = geompy.MakeShell(self.shells)
             if str(shell.GetShapeType()) == "COMPOUND":
@@ -135,7 +135,7 @@ class tool_create_layersAndCutters:
     
 
     def __select_trajectory(self):
-        self.trajectory, self.trajectoryId = selection_method(self.mainApp, self.ui.label_translationTrajectoryValidation, self.ui.label_translationTrajectoryEntry, vectorTypesList)
+        self.trajectory, self.trajectoryId, check = selection_method(self.mainApp, self.ui.label_translationTrajectoryValidation, self.ui.label_translationTrajectoryEntry, vectorTypesList)
 
 
     def __get_increment(self):
