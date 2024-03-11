@@ -63,6 +63,9 @@ class tool_parameters:
         env.dataStruct.machineParam.milling.toolCorrection = self.ui.checkBox_mill_compensateTool.isChecked()
         
         env.dataStruct.machineParam.airTape.toolSpeed = float(self.ui.lineEdit_airTape_speed.text())
+        env.dataStruct.machineParam.airTape.feedRate = float(self.ui.lineEdit_airTape_feedrate.text())
+        env.dataStruct.machineParam.airTape.airStartingDistance = float(self.ui.lineEdit_airTape_airStart.text())
+        env.dataStruct.machineParam.airTape.rollerDownDistance = float(self.ui.lineEdit_airTape_rollDown.text())
         
         env.dataStruct.machineParam.laserTape.toolSpeed = float(self.ui.lineEdit_laserTape_toolSpeed.text())
         env.dataStruct.machineParam.laserTape.laserPower = float(self.ui.lineEdit_laserTape_laserPower.text())
@@ -103,6 +106,9 @@ class tool_parameters:
         self.ui.checkBox_mill_compensateTool.setChecked(env.dataStruct.machineParam.milling.toolCorrection)
         
         self.ui.lineEdit_airTape_speed.setText(str(env.dataStruct.machineParam.airTape.toolSpeed))
+        self.ui.lineEdit_airTape_feedrate.setText(str(env.dataStruct.machineParam.airTape.feedRate))
+        self.ui.lineEdit_airTape_airStart.setText(str(env.dataStruct.machineParam.airTape.airStartingDistance))
+        self.ui.lineEdit_airTape_rollDown.setText(str(env.dataStruct.machineParam.airTape.rollerDownDistance))
         
         self.ui.lineEdit_laserTape_toolSpeed.setText(str(env.dataStruct.machineParam.laserTape.toolSpeed))
         self.ui.lineEdit_laserTape_laserPower.setText(str(env.dataStruct.machineParam.laserTape.laserPower))

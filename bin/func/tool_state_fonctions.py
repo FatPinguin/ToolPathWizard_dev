@@ -3,9 +3,10 @@ from .common_variables import MACHINING, APPROACH, RETRACT, TRAVEL, fdmPerimeter
 
 false = 0
 true = 1
-
+void = 'void'
 
 def tool_head_state(fabricationMode:int, moveType:int, increment:int, curveLength:float, distanceOnCurve:float, distOnApproach:float=None):#, startDistance:float, endDistance:float): #TODO - Gérer les opérations intermédiaires à des distances définies (exemple : start laser; cut strip; stop laser) (rétracter plastique)
+    ### RBDK path streamer read 6 columns
     if fabricationMode == fdmPerimeter:
         return fdm_perimeter_tool_state(moveType, increment)
     elif fabricationMode == fdmInfill:
@@ -26,7 +27,7 @@ def tool_head_state(fabricationMode:int, moveType:int, increment:int, curveLengt
 
 #TODO - Ajouter une gestion des STOP_TOOL à la fin d'une séquence d'opérations
 def generic_tool_state():
-    return []
+    return [void, void, void, void, void, void]
 
 
 def fdm_infill_tool_state(moveType:int, increment:float):
@@ -35,11 +36,11 @@ def fdm_infill_tool_state(moveType:int, increment:float):
     if moveType == MACHINING : #ajouter ici les cas de rétractation du filament
         filamentSpeed = dataStruct.machineParam.fdmFilament.filamentSpeed
         cooling = true
-        return [increment, filamentSpeed, cooling, extruderTemp]
+        return [increment, filamentSpeed, cooling, extruderTemp, void, void]
     elif moveType == APPROACH :
-        return [0,0,false,extruderTemp]
+        return [0,0,false,extruderTemp, void, void]
     elif moveType == RETRACT or moveType == TRAVEL :
-        return [0,0,false,extruderTemp]
+        return [0,0,false,extruderTemp, void, void]
 
 
 def fdm_perimeter_tool_state(moveType:int, increment:float):
@@ -47,11 +48,11 @@ def fdm_perimeter_tool_state(moveType:int, increment:float):
     extruderTemp = dataStruct.machineParam.fdmFilament.extruderTemp
     if moveType == MACHINING : #ajouter ici les cas de rétractation du filament
         filamentSpeed = dataStruct.machineParam.fdmFilament.filamentSpeed
-        return [increment, filamentSpeed, true, extruderTemp]
+        return [increment, filamentSpeed, true, extruderTemp, void, void]
     elif moveType == APPROACH :
-        return [0,0,false,extruderTemp]
+        return [0,0,false,extruderTemp, void, void]
     elif moveType == RETRACT or moveType == TRAVEL :
-        return [0,0,false,extruderTemp]
+        return [0,0,false,extruderTemp, void, void]
 
 
 def fdm_pellet_infill_tool_state(moveType:int, distanceOnCurve:float, curveLength:float):
@@ -74,7 +75,7 @@ def fdm_pellet_infill_tool_state(moveType:int, distanceOnCurve:float, curveLengt
     elif moveType == TRAVEL :
         extrude = 0
         pull = 0
-    return [extrSpeed, extrTemp, extrude, pull, 0, 0]
+    return [extrSpeed, extrTemp, extrude, pull, void, void] #0, 0
 
 
 def fdm_pellet_perimeter_tool_state(moveType:int, distanceOnCurve:float, curveLength:float):
@@ -96,17 +97,17 @@ def fdm_pellet_perimeter_tool_state(moveType:int, distanceOnCurve:float, curveLe
     elif moveType == TRAVEL :
         extrude = 0
         pull = 0
-    return [extrSpeed, extrTemp, extrude, pull, 0, 0]
+    return [extrSpeed, extrTemp, extrude, pull, void, void] #0, 0
 
 
 def milling_tool_state(moveType:int):
     #[spindle state (bool); spindle speed (rev/min)]
     if moveType == MACHINING : #ajouter ici les actions en un point
-        return [true, dataStruct.machineParam.milling.spindleSpeed]
+        return [true, dataStruct.machineParam.milling.spindleSpeed, void, void, void, void]
     elif moveType == APPROACH :
-        return [true, dataStruct.machineParam.milling.spindleSpeed]
+        return [true, dataStruct.machineParam.milling.spindleSpeed, void, void, void, void]
     elif moveType == RETRACT or moveType == TRAVEL :
-        return [false, 0]
+        return [false, 0, void, void, void, void]
 
 
 #old
@@ -219,7 +220,7 @@ def air_tape_tool_state(moveType:int, distanceOnCurve:float, curveLength:float, 
             feedRate = dataStruct.machineParam.airTape.feedRate
         if distanceOnCurve == distCutTape:
             cutTrig = 1
-        return [0, 1, 1, cutTrig, feedRate]
+        return [0, 1, 1, cutTrig, feedRate, void]
     
     elif moveType == APPROACH :
         approachLength = dataStruct.machineParam.generics.securityDistance
@@ -234,10 +235,10 @@ def air_tape_tool_state(moveType:int, distanceOnCurve:float, curveLength:float, 
             rollDown = 1
         if distOnApproach >= (approachLength-distTurnOnAir):
             airFlow = 1
-        return [prepTrig, rollDown, airFlow, 0, 0]  #Prep trigger = 1 ; Feed rate 0 mm/s
+        return [prepTrig, rollDown, airFlow, 0, 0, void]  #Prep trigger = 1 ; Feed rate 0 mm/s
     
     elif moveType == RETRACT or moveType == TRAVEL :
-        return [0, 0, 0, 0, 0]  #Feed rate 0 mm/s
+        return [0, 0, 0, 0, 0, void]  #Feed rate 0 mm/s
 
     #    if distanceOnCurve <= (distTurnOnAir - increment/2): #Dépose avant d'allumer l'air
     #        return [0, 0, 0, 0, feedRate]
