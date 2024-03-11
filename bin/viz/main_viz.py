@@ -76,6 +76,7 @@ class mainWindow(QObject):
         self.uiMenu.pushButton_display_layers.clicked.connect(self.__show_layers_in_study)
         self.uiMenu.pushButton_display_trajectories.clicked.connect(self.__show_trajectories_in_study)
         self.uiMenu.pushButton_display_points.clicked.connect(self.__show_points_in_study)
+        self.uiMenu.pushButton_display_points.setDisabled(True)
         self.uiMenu.pushButton_viz.clicked.connect(self.__plot_points)
         self.uiMenu.pushButton_reverse.clicked.connect(self.__reverse_wires)
         #self.uiMenu.pushButton_viz.setDisabled(True)

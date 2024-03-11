@@ -113,7 +113,7 @@
     <item>
      <widget class="QToolBox" name="toolBox">
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Generiques">
        <property name="geometry">
@@ -555,14 +555,10 @@
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Vitesse de déplacement outil [mm/s]</string>
-           </property>
-          </widget>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="lineEdit_airTape_speed"/>
          </item>
-         <item row="0" column="1">
+         <item row="0" column="3">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -575,10 +571,7 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="lineEdit_airTape_speed"/>
-         </item>
-         <item row="1" column="0">
+         <item row="5" column="1">
           <spacer name="verticalSpacer_5">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -590,6 +583,43 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Avance outil [mm/s]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Descente rouleau avant dépose [mm]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Allumage air chaud avant dépose [mm]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Feed rate [mm/s]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="lineEdit_airTape_feedrate"/>
+         </item>
+         <item row="2" column="4">
+          <widget class="QLineEdit" name="lineEdit_airTape_airStart"/>
+         </item>
+         <item row="3" column="4">
+          <widget class="QLineEdit" name="lineEdit_airTape_rollDown"/>
          </item>
         </layout>
        </widget>
@@ -667,10 +697,17 @@
           </widget>
          </item>
          <item row="4" column="2">
-          <widget class="QLineEdit" name="lineEdit_offset"/>
+          <widget class="QLineEdit" name="lineEdit_offset">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_feedSpeed">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Feed speed [mm/s]</string>
            </property>
@@ -678,6 +715,9 @@
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_offset">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Offset [mm] Negative = compression / positive = spacing</string>
            </property>
@@ -714,7 +754,11 @@
           <widget class="QLineEdit" name="lineEdit_layIncr"/>
          </item>
          <item row="1" column="2">
-          <widget class="QLineEdit" name="lineEdit_feedSpeed"/>
+          <widget class="QLineEdit" name="lineEdit_feedSpeed">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="5" column="2">
           <widget class="QLineEdit" name="lineEdit_incr"/>

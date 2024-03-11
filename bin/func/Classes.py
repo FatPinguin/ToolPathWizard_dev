@@ -70,12 +70,12 @@ class cls_laser_tape:
         self.cutIncr = 3    #mm
 
 class cls_air_tape:
-    def __init__(self, speed:float):#, airStartingDistance:float, airStopingDistance:float, cuttingDistance:float):
+    def __init__(self):#, airStartingDistance:float, airStopingDistance:float, cuttingDistance:float):
         #Composite Automated Tape Layup
         self.minimumTrajectoryLength = 120   #mm
-        self.toolSpeed = speed
-        self.airStartingDistance = 5 #mm 0
-        self.rollerDownDistance =  5 #mm 0
+        self.toolSpeed = 20 #mm/s
+        self.airStartingDistance = 0 #mm
+        self.rollerDownDistance =  0 #mm
         self.cuttingDistance = 111.3 #mm
         #self.tapeFeed = None
         self.feedRate = 20 #mm/s
@@ -291,5 +291,5 @@ def default_machine_settings():
     dataParamFdmFilament = cls_fdm_filament(infillSpeed=80, perimeterSpeed=60, relativeFilamentSpeed=50, filamentSpeed=60, cooling=True, extruderTemp=195, extrusionDiameter=0.4)
     dataParamMilling = cls_milling(speed=20, spindleSpeed=3000, toolDiameter=8, toolCorrection=True)
     dataParamTapeLaser = cls_laser_tape(speed=20, laserStartingDistance=2, laserStopingDistance=1)
-    dataParamTapeAirPulse = cls_air_tape(speed=20)
+    dataParamTapeAirPulse = cls_air_tape()
     return cls_machine_parameters(dataParamGen, dataParamFdmPellet, dataParamFdmFilament, dataParamMilling,dataParamTapeLaser, dataParamTapeAirPulse)

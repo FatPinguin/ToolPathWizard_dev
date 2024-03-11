@@ -9,7 +9,8 @@ standardHeader = ["Operation id", "Instruction", "Operation type", "Layer id", "
                       "Tool rot Z (deg)", "Tool tilt Y (deg)", "7th axis pos (robots units)", "7th axis speed (robots units)",
                       "Distance on curve (mm)", "Total distance (mm) (only active passes)", "Speed (mm/s)", "Stop flag: continuous/stop here (0/1)"]
 
-genericHeader = ["No tool selected"]
+### RBDK path streamer read 6 columns
+genericHeader = ["Aux output 1 (*)", "Aux output 2 (*)", "Aux output 3 (*)", "Aux output 4 (*)", "Aux output 5 (*)", "Aux output 6 (*)"]
 
 headerFdmPellet = ["Flow rate (mm3/s)", "Extruder temp (deg)", "Extrude: off/on (0/1)", "Direction: retract/push (0/1)", "Aux output 1 ", "Aux output 2 (*)"]
 
@@ -17,9 +18,9 @@ headerMilling = ["Spindle: off/on (0/1)", "Spindle speed (rev/min) or (0 to 1)",
 
 headerFdmFillament = ["Relative Filament Feed (mm) [incremental]", "Filament feed speed (mm/s)", "Part cooling: off/on (0/1)", "Extruder temp (deg)", "Aux output 1 (*)", "Aux output 2 (*)"]
 
-headerTapeLayingLaser = ["Laser state: off/on (0/1)", "Laser power (laser controller units)", "Cut flag: idle/cut (0/1)", "Aux output 1 (*)", "Version %s"%(SLICERVERSION)]
+headerTapeLayingLaser = ["Laser state: off/on (0/1)", "Laser power (laser controller units)", "Cut flag: idle/cut (0/1)", "Aux output 1 (*)", "Aux output 2 (*)", "Version %s"%(SLICERVERSION)]
 
-headerTapeLayingAirPulse = ["Prep trigger off/on (0/1)", "Roller down off/on (0/1)", "Air flow off/on (0/1)", "Cut trigger off/on (0/1)", "Feed rate (mm/s)"]
+headerTapeLayingAirPulse = ["Prep trigger off/on (0/1)", "Roller down off/on (0/1)", "Air flow off/on (0/1)", "Cut trigger off/on (0/1)", "Feed rate (mm/s)", "Aux output 1 (*)"]
 
 headerFdmFiber = ["Relative Filament Feed (mm) [incremental]", "Filament feed speed (mm/s)", "Part cooling: off/on (0/1)", "Extruder temp (deg)", "Cut: off/on (0/1)", "Aux output 2 (*)"]
 

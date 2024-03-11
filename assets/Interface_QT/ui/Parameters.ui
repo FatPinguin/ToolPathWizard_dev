@@ -555,10 +555,24 @@
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_ATL_feedRate">
+           <property name="text">
+            <string>Avance de bande [mm/s]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Allumage air chaud avant dépose [mm]</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
            <property name="text">
-            <string>Vitesse de déplacement outil [mm/s]</string>
+            <string>Avance outil [mm/s]</string>
            </property>
           </widget>
          </item>
@@ -578,7 +592,7 @@
          <item row="0" column="2">
           <widget class="QLineEdit" name="lineEdit_airTape_speed"/>
          </item>
-         <item row="1" column="0">
+         <item row="4" column="0">
           <spacer name="verticalSpacer_5">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -590,6 +604,22 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Descente rouleau avant dépose [mm]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="lineEdit_airTape_feedrate"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="lineEdit_airTape_airStart"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="lineEdit_airTape_rollDown"/>
          </item>
         </layout>
        </widget>
@@ -664,7 +694,11 @@
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QLineEdit" name="lineEdit_offset"/>
+          <widget class="QLineEdit" name="lineEdit_offset">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="7" column="0">
           <spacer name="verticalSpacer_6">
@@ -681,6 +715,9 @@
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_offset">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Offset [mm] Negative = compression / positive = spacing</string>
            </property>
@@ -751,6 +788,9 @@
   <tabstop>checkBox_mill_compensateTool</tabstop>
   <tabstop>lineEdit_mill_toolDiameter</tabstop>
   <tabstop>lineEdit_airTape_speed</tabstop>
+  <tabstop>lineEdit_airTape_feedrate</tabstop>
+  <tabstop>lineEdit_airTape_airStart</tabstop>
+  <tabstop>lineEdit_airTape_rollDown</tabstop>
   <tabstop>lineEdit_laserTape_toolSpeed</tabstop>
   <tabstop>lineEdit_laserTape_laserPower</tabstop>
   <tabstop>lineEdit_minTrajLen</tabstop>
@@ -758,9 +798,9 @@
   <tabstop>lineEdit_incr</tabstop>
   <tabstop>lineEdit_layIncr</tabstop>
   <tabstop>lineEdit_cutIncr</tabstop>
+  <tabstop>pushButton_save_param</tabstop>
   <tabstop>pushButton_validation</tabstop>
   <tabstop>pushButton_return</tabstop>
-  <tabstop>pushButton_save_param</tabstop>
  </tabstops>
  <resources/>
  <connections/>

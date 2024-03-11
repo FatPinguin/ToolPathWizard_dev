@@ -196,7 +196,7 @@ def convert_dict_to_data_structure(dictDataStruct:dict):
                             curve.increment = dictCurve['Discretisation increment']
                             curve.prePosTool = dictCurve['Tool positioning']
                             for pointKey in dictCurve['Point list'].keys():
-                                point = cls_point(None, None, None, None, None, None, None, None, None, None)
+                                point = cls_point(None, None, None, None, None, None, None, None, None, None, None)
                                 dictPoint = dictCurve['Point list'][pointKey]
                                 point.pointId = dictPoint['Point ID']
                                 point.distanceOnCurve = dictPoint['Distance on curve']
@@ -299,7 +299,7 @@ def display_objects_from_dataStruct(objectStr:str, uiProgressBar, dataStruct:cls
                 if surfaceGroups.typeGenerated:
                     for surface in surfaceGroups.surfaceList:
                         try:
-                            gstools.displayShapeByEntry(surface.surfaceId, color=[0,255,0])
+                            gstools.displayShapeByEntry(surface.surfaceId)#, color=[0,255,0])
                         except:
                             print("Didn't find surface %s in study"%(surface.surfaceId))
                         count+=1

@@ -453,8 +453,8 @@ def inter_points(curve:cls_curve, oriPoint:cls_point, moveType:int, fabMode:int)
                 distOnApproach = -distOnApproach
             ths = tool_head_state(fabMode, moveType, secuDiscr, curve.curveLength, None, distOnApproach)
             print(f"dstOAp {distOnApproach} THS ",ths)
-            interPoint = cls_point(coordinates, None, 0, moveType, None, 
-                                   oriPoint.normalVector, oriPoint.tangentialVector, ths, speed, True, 0)
+            interPoint = cls_point(coordinates, "Unpublished", 0, moveType, None, 
+                                   oriPoint.normalVector, oriPoint.tangentialVector, ths, speed, False, 0)
             curve.add_point_to_curve(interPoint)
             interPointList.append(interPoint)
     return interPointList
