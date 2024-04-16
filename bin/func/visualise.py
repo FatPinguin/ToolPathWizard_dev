@@ -36,9 +36,9 @@ else:
                   "Distance on curve (mm)", "Total distance (mm) (only active passes)", "Speed (robots units)", "Stop flag: continuous/stop here (0/1)",
                   "Flow rate (mm3/s)", "Extruder temp (deg)", "Extrude: off/on (0/1)", "Direction: retract/push (0/1)", "Aux output 1 ", "Aux output 2 (*)"]
 
-def read_file(fileName, fields = fieldNames):
+def read_file(fileName, fields):# = fieldNames):
     try:
-        df = pd.read_csv(fileName, delimiter=',', usecols = fields)
+        df = pd.read_csv(fileName, delimiter=',')#, usecols = fields)
         print(df["X coord (mm)"])
         return df
     except:

@@ -54,7 +54,7 @@ class tool_export:
     def __main(self):
         if self.fileName != None:
             self.ui.progressBar.show()
-            export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar, flag7axis=self.ui.checkBox_7axis_compilation, orthoVector=self.orthoV)
+            export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar, flag7axis=self.ui.checkBox_7axis_compilation, orthoVector=self.orthoV, rotVector=self.rotV)
             #FCT.export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar)
             self.__close_window()
         else:

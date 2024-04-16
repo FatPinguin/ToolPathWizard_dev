@@ -3,7 +3,7 @@ from .common_variables import MACHINING, APPROACH, RETRACT, TRAVEL, fdmPerimeter
 
 false = 0
 true = 1
-void = 'void'
+void = '0'
 
 def tool_head_state(fabricationMode:int, moveType:int, increment:int, curveLength:float, distanceOnCurve:float, distOnApproach:float=None):#, startDistance:float, endDistance:float): #TODO - Gérer les opérations intermédiaires à des distances définies (exemple : start laser; cut strip; stop laser) (rétracter plastique)
     ### RBDK path streamer read 6 columns
@@ -151,7 +151,7 @@ def laser_tape_tool_state(moveType:int, increment:float, distanceOnCurve:float, 
         elif distanceOnCurve > (distTurnOffLaser - increment/2) : #Extinction laser
             return [false, 0, false]
     elif moveType == APPROACH or moveType == RETRACT or moveType == TRAVEL :
-        return [false, 0, false]
+        return [false, 0, false, void, void]
     
 
 #def laser_tape_tool_state(moveType:int, increment:float, distanceOnCurve:float, curveLength:float, isFirstPoint):

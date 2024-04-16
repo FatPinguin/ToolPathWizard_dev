@@ -9,7 +9,7 @@ import ToolPathWizard_dev.bin.func.environment as env
 from .dlf7axis import dlf_7_axis_point_modification
 
 
-def export_tool(data:cls_data_structure, fileAdress:str, exportInfillBeforePerimeter:bool, UiProgressBar, flag7axis, orthoVector=None): #TODO - si milling export dans le sens inverse checkBox --> message attention lors de la création de l'opération: la surface choisie sera la première à etre usinée.
+def export_tool(data:cls_data_structure, fileAdress:str, exportInfillBeforePerimeter:bool, UiProgressBar, flag7axis, orthoVector=None, rotVector=None): #TODO - si milling export dans le sens inverse checkBox --> message attention lors de la création de l'opération: la surface choisie sera la première à etre usinée.
     #Tri des opérations
     if data.sortedOperations == []:
         data.sortedOperations = data.generatedOperations
@@ -18,7 +18,7 @@ def export_tool(data:cls_data_structure, fileAdress:str, exportInfillBeforePerim
     if flag7axis:
         for fm in fabModes :
             if fm == tapeLayingLaser :
-                dlf_7_axis_point_modification(sortedFabricationSteps, orthoVector)
+                sortedFabricationSteps = dlf_7_axis_point_modification(sortedFabricationSteps, orthoVector, rotVector)
     #Création des lignes à exporter
     exportLines, totalDistanceActive = write_points(sortedFabricationSteps, totalPointCounter, UiProgressBar)
     fieldNames = Field_names(fabModes)

@@ -23,14 +23,19 @@ def discretisation_tool(dataLayerGroup:cls_surfaces_grp, increment:float, UiPBar
     layerCount = 0
     nbLayers = len(dataLayerGroup.surfaceList)
     #print("nbLays:",nbLayers)
+    if nbLayers == 0:
+        pass
     update_progressBar_and_label(UiPBarLay, uiLabLay, layerCount, nbLayers, "Layer")
     for dataLayer in dataLayerGroup.surfaceList:
         surfaceGeom, surfaceType = get_geom(dataLayer.surfaceId)
         for dataOperation in dataLayer.operationList:
-            startingDistance, endingDistance = __start_and_stop(dataOperation.fabricationMode)
             curveCount = 0
             nbCurves = len(dataOperation.curveList)
             #print("nb curves :", nbCurves)
+            if nbCurves == 0:
+                curveCount += 1
+                pass
+            startingDistance, endingDistance = __start_and_stop(dataOperation.fabricationMode)
             update_progressBar_and_label(UiPBarCurves, uiLabCurves, curveCount, nbCurves, "Curve")
             for dataCurve in dataOperation.curveList:
                 #Check longueur minimale
@@ -250,9 +255,10 @@ def speed_selector(moveType:int , fabricationMode:int, stopCondition=False):
 #@reloading
 def create_point(curve:cls_curve, curveGeom, POI:cls_points_of_interest.info_point, speed, fabricationMode:int, surfaceGeom, PtsOI:cls_points_of_interest, UiProgressBar, uiLabel):
     try :
-        vertexGeom = point_on_edge(POI.distOnEdge, POI.edgeGeom)
+        vertexGeom, faceGeom = point_and_face(POI, surfaceGeom, curve)
+        #vertexGeom = point_on_edge(POI.distOnEdge, POI.edgeGeom)
+        #faceGeom = get_face(vertexGeom, surfaceGeom)
         vertexEntry, coordinates = add_to_study(curveGeom, vertexGeom, PtsOI.count)
-        faceGeom = get_face(vertexGeom, surfaceGeom)
         nVector, tVector = gen_vectors(faceGeom, vertexGeom, POI, vertexEntry)
         toolHeadState = tool_head_state(fabricationMode, MACHINING, POI.increment, curve.curveLength, POI.distOnWire)
         #if cfrDlfVersion and dataStruct.machineParam.laserTape.offset :    #NOTE - Pourrais causer problème lors de la détection de colision. Faire du côté gen traj robotique
@@ -287,6 +293,18 @@ def get_face(vertexGeom, surfaceGeom):
     if str(surfaceGeom.GetShapeType()) == "FACE":
         return surfaceGeom
     return geompy.GetFaceNearPoint(surfaceGeom, vertexGeom)
+
+
+def point_and_face(POI:cls_points_of_interest.info_point, surfaceGeom, curve:cls_curve):
+    vertexGeom = point_on_edge(POI.distOnEdge, POI.edgeGeom)
+    try:
+        faceGeom = get_face(vertexGeom, surfaceGeom)
+    except RuntimeError:
+        print(f"Failed to create point at {POI.distOnWire}mm on curve {curve.curveId}")
+        print(f"Attempt by shifting the point by 1e-6mm on the edge")
+        POI.distOnEdge = POI.distOnEdge + 1E-6
+        vertexGeom, faceGeom = point_and_face(POI, surfaceGeom, curve)
+    return vertexGeom, faceGeom
 
 
 #@reloading
