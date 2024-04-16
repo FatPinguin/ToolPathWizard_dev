@@ -6,7 +6,7 @@ defaultDir = "C:\\Salome-2019-w64-1.2\\WORK"
 
 
 #Constantes d'execution
-SLICERVERSION = '2.48'  #Last modification : 06/03/24 #Last deploy : 11/01/24
+SLICERVERSION = '2.50'  #Last modification : 16/04/24 #Last deploy : 16/04/24
 cfrDlfVersion = False   #True   #
 operationIsTape = False
 operationIsPellet = False
