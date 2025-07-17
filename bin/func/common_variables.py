@@ -51,7 +51,7 @@ WAIT = 4
 
 #Constantes
 generalContinuityTolerance = 1e-3
-
+wireContinuityTolerance = 1
 
 #Types por utilisation de QtreeWidget
 qtVolumeType = "Volume"
