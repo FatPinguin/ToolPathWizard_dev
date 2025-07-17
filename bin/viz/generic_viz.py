@@ -80,7 +80,7 @@ def selection_method(mainApp, guiIndicator, guiEntryDisplay, authorisedTypesList
             flagObjectType = False
     selection_indicator(guiIndicator, flagObjectType)
     display_IDs_of_selected_objects(guiEntryDisplay, objectIdList)
-    return objectList, objectIdList, flag
+    return objectList, objectIdList, flagObjectType#flag
 
 
 def get_value_in_line_edit(mainApp, guiLineEdit, guiIndicator):
