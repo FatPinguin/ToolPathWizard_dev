@@ -97,6 +97,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_rotation">
+        <property name="text">
+         <string>Créer les surfaces par rotation</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -200,14 +207,14 @@
       <item row="4" column="0">
        <widget class="QLabel" name="label_increment">
         <property name="text">
-         <string>Incrément [mm]</string>
+         <string>Incrément [mm ou °]</string>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
        <widget class="QLabel" name="label_translationTrajectory">
         <property name="text">
-         <string>Trajectoire</string>
+         <string>Trajectoire ou Axe</string>
         </property>
        </widget>
       </item>
