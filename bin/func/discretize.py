@@ -1,5 +1,6 @@
 #from ToolPathWizard_dev.lib.reloading import reloading
 import numpy as np
+import random
 
 from .Classes import cls_surfaces_grp, cls_surface, cls_operation, cls_curve, cls_point, cls_coordinates, cls_vector, cls_edge, cls_points_of_interest
 from .environment import geompy, salome, dataStruct
@@ -22,7 +23,6 @@ def discretisation_tool(dataLayerGroup:cls_surfaces_grp, increment:float, UiPBar
     dataCurve:cls_curve
     layerCount = 0
     nbLayers = len(dataLayerGroup.surfaceList)
-    #print("nbLays:",nbLayers)
     if nbLayers == 0:
         pass
     update_progressBar_and_label(UiPBarLay, uiLabLay, layerCount, nbLayers, "Layer")
@@ -31,11 +31,12 @@ def discretisation_tool(dataLayerGroup:cls_surfaces_grp, increment:float, UiPBar
         for dataOperation in dataLayer.operationList:
             curveCount = 0
             nbCurves = len(dataOperation.curveList)
-            #print("nb curves :", nbCurves)
+            #print("nbCurves:",nbCurves)
             if nbCurves == 0:
                 curveCount += 1
                 pass
             startingDistance, endingDistance = __start_and_stop(dataOperation.fabricationMode)
+            print(f"On layer {dataLayer.surfaceId}")
             update_progressBar_and_label(UiPBarCurves, uiLabCurves, curveCount, nbCurves, "Curve")
             for dataCurve in dataOperation.curveList:
                 #Check longueur minimale
@@ -167,6 +168,10 @@ def points_of_interest(fabMode:int, curveLength:float, startingDistance:float, e
         distOnWire, newIncr = intermediates_points(pointsOfInterest, distOnWire, pointsOfInterest.stop.distOnWire, increment, edgeList)
         pointsOfInterest.stop.increment = newIncr
 
+    elif fabMode == fdmPelletInfill or fabMode == fdmPelletPerimeter:
+        distOnWire, newIncr = intermediates_points(pointsOfInterest, distOnWire, pointsOfInterest.stop.distOnWire, increment, edgeList)
+        pointsOfInterest.stop.increment = newIncr
+        
     else :
         raise Exception("Add here points of interest for others tools") #TODO
     #TODO - Vérifier si besoin ou si interne à la classe suffit
@@ -267,10 +272,11 @@ def create_point(curve:cls_curve, curveGeom, POI:cls_points_of_interest.info_poi
         #curve.add_point_to_curve(point)
         #update_progressBar(UiProgressBar, PtsOI.count/PtsOI.nb*100)
         #check_orthogonality(vertexGeom, point)
-        if not doNotPublishPointInStudy :
-            update_progressBar_and_label(UiProgressBar, uiLabel, PtsOI.count, PtsOI.nb, "Point")
+        #if not doNotPublishPointInStudy :
+        #    update_progressBar_and_label(UiProgressBar, uiLabel, PtsOI.count, PtsOI.nb, "Point")
+        update_progressBar_and_label(UiProgressBar, uiLabel, PtsOI.count, PtsOI.nb, "Point")
         PtsOI.count +=1
-    except Point_creation_error(f"Failed to create point at {POI.distOnWire}mm on curve {curve.curveId}"):
+    except Point_creation_error(f"Failed to create point at {POI.distOnWire}mm on curve {curve.curveId}") or Orthogonality_error:
         pass
     return vertexGeom, point
 
@@ -292,17 +298,43 @@ def add_to_study(curveGeom, vertexGeom, descriptor):
 def get_face(vertexGeom, surfaceGeom):
     if str(surfaceGeom.GetShapeType()) == "FACE":
         return surfaceGeom
-    return geompy.GetFaceNearPoint(surfaceGeom, vertexGeom)
+    ntrials=9
+    trialstep=1e-3
+    trialstepfactor=2
+    try:
+        faceresult = geompy.GetFaceNearPoint(surfaceGeom, vertexGeom)
+    except:
+        print("get_face: cannot find face or multiple faces close to point => random search near point activated!")
+        for i in range(ntrials):
+            trialstep = trialstep * trialstepfactor
+            coords = geompy.PointCoordinates(vertexGeom)
+            newX = coords[0] + trialstep * random.uniform(-1.0,1.0)
+            newY = coords[1] + trialstep * random.uniform(-1.0,1.0)
+            newZ = coords[2] + trialstep * random.uniform(-1.0,1.0)
+            trialvertex=geompy.MakeVertex(newX, newY, newZ)
+            try:
+                faceresult = geompy.GetFaceNearPoint(surfaceGeom, trialvertex)
+                del trialvertex
+                print("Found face at iteration ", i, ", tolerance = ", trialstep  )
+                return faceresult
+            except:
+                pass
+        print("get_face: unique face not found near given point, return None")
+        return None
+    return faceresult 
 
 
 def point_and_face(POI:cls_points_of_interest.info_point, surfaceGeom, curve:cls_curve):
+    print(f"point_and_face: create point at {POI.distOnWire}mm on curve {curve.curveId}")
     vertexGeom = point_on_edge(POI.distOnEdge, POI.edgeGeom)
     try:
         faceGeom = get_face(vertexGeom, surfaceGeom)
+        if faceGeom == None:
+            print("Error in get Face: no result returned")
     except RuntimeError:
         print(f"Failed to create point at {POI.distOnWire}mm on curve {curve.curveId}")
-        print(f"Attempt by shifting the point by 1e-6mm on the edge")
-        POI.distOnEdge = POI.distOnEdge + 1E-6
+        print(f"Attempt by shifting the point by  1e-3mm along edge ")
+        POI.distOnEdge = POI.distOnEdge + 1.00E-3
         vertexGeom, faceGeom = point_and_face(POI, surfaceGeom, curve)
     return vertexGeom, faceGeom
 
@@ -502,4 +534,3 @@ def publish_vectors(vertexGeom, dataPoint:cls_point):
         vNormEntry = "Unpublished"
         vTangEntry = "Unpublished"
     return vNormEntry, vTangEntry
-

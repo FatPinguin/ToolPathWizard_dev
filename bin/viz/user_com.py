@@ -7,10 +7,14 @@ def update_progressBar(guiBar, percent:float):
 
 
 def update_progressBar_and_label(guiBar, uiLabel, actual:int, total:int, label:str):
-       percent = round((actual)/total*100)
-       guiBar.setValue(percent)
-       uiLabel.setText(f"{label} {actual}/{total} ({percent}%)")
-       return
+    try :
+        percent = round((actual)/total*100)
+        guiBar.setValue(percent)
+        uiLabel.setText(f"{label} {actual}/{total} ({percent}%)")
+    except ZeroDivisionError:
+        guiBar.setValue(100)
+        uiLabel.setText(f"{label} {actual}/{total} Warning: total = 0")
+    return
 
 
 #def message_error(message):

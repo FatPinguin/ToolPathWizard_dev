@@ -30,11 +30,11 @@ def dlf_7_axis_rotation(vectInPlane, normPlane, ptNorm:cls_vector):
     pN = np.array([ptNorm.vx, ptNorm.vy, ptNorm.vz])
     vProj = plane_projection(normPlane, pN)
     #angle = angle_difference(normPlane, vProj)
-    print(f"\nAngle d'origine:{pN}\tProjection: {vProj}\tvInPlane: {vectInPlane}\tnormPlane: {normPlane}")
+    #print(f"\nAngle d'origine:{pN}\tProjection: {vProj}\tvInPlane: {vectInPlane}\tnormPlane: {normPlane}")
     teta = angle_difference(vectInPlane, vProj)
-    print(f"\tRes. Angle vP-vProj: {teta}")
+    #print(f"\tRes. Angle vP-vProj: {teta}")
     teta = orientation(vProj, normPlane, vectInPlane, teta)
-    print(f"\tRes. Angle vP-vProj (new): {teta}")
+    #print(f"\tRes. Angle vP-vProj (new): {teta}")
     return teta
 
 
@@ -51,7 +51,7 @@ def angle_difference(w, v):
     # v = vecteur "mobile" (projeté)
 
     #print(f"Angles 3D tan_norm:{np.rad2deg(np.arctan2(np.linalg.norm(np.cross(w, v)), np.dot(w, v)))}")
-    print(f"Angles 3D tan2:{np.rad2deg(np.arctan2(np.cross(w, v), np.dot(w, v)))}")
+    #print(f"Angles 3D tan2:{np.rad2deg(np.arctan2(np.cross(w, v), np.dot(w, v)))}")
     angle = np.rad2deg(np.arctan2(np.linalg.norm(np.cross(w, v)), np.dot(w, v)))
     #print(f"Angle COS: {np.rad2deg(np.arccos(np.dot(w,v) / (np.linalg.norm(w) * np.linalg.norm(v))))}deg")
     #if angle < np.single(0):
@@ -84,7 +84,7 @@ def orientation(v, n, w, teta):
     # phi = angle entre k et w
     k = np.cross(v, n)
     phi = angle_difference(w, k)
-    print(f"teta: {teta}\tphi: {phi}")
+    #print(f"teta: {teta}\tphi: {phi}")
     if (0 <= teta <= 90) and (0 <= phi <= 90):  #if teta in range(0, 90) and phi in range(0, 90):
         return teta
     elif (90 <= teta <= 180) and (0 <= phi <= 90):  #elif teta in range(90, 180) and phi in range(0, 90):

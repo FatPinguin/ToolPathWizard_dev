@@ -1,5 +1,6 @@
 from ..func.environment import salome, gstools, geompy
 import ToolPathWizard_dev.bin.func.environment as env
+import math
 from ..func.Classes import cls_surfaces_grp, cls_volume, cls_surface
 from ..viz.user_com import update_progressBar, message_error, message_information_no_main
 
@@ -19,7 +20,7 @@ def main_surfaces(self):#increment, volumes, volumesIds, shells, trajectory, num
                 dataSurfaceGroup = cls_surfaces_grp(groupId, self.isLayersFlag, shell.GetEntry(), self.increment, self.isCreatedByOffset, self.trajectory[0].GetEntry())
             else:
                 dataSurfaceGroup = cls_surfaces_grp(groupId, self.isLayersFlag, shell.GetEntry(), self.increment, self.isCreatedByOffset, None)
-            surfacesList, dataSurfaceGroup, opCount = __generate_surfaces(group, volume, shell, dataSurfaceGroup, numberOfOperations, self.numberOfElements, surfaceName, self.increment, self.ui.progressBar, opCount, self.firstLayerMethod, self.isCreatedByOffset, self.trajectory)
+            surfacesList, dataSurfaceGroup, opCount = __generate_surfaces(group, volume, shell, dataSurfaceGroup, numberOfOperations, self.numberOfElements, surfaceName, self.increment, self.ui.progressBar, opCount, self.firstLayerMethod, self.isCreatedByOffset, self.isCreatedByRotation, self.trajectory)
             dataVolume.add_grp_surface_to_volume(dataSurfaceGroup)
     return
 
@@ -34,14 +35,14 @@ def surface_denomination(isLayersFlag:bool):
     return groupName, surfaceName
 
 
-def __generate_surfaces(folder, volume, shell, dataSurfaceGroup:cls_surfaces_grp, numberOfOperations:int, numberOfElements:int, surfaceName, increment, UIprogress, opCount, firstLayerMethod, isCreatedByOffset, trajectory):
+def __generate_surfaces(folder, volume, shell, dataSurfaceGroup:cls_surfaces_grp, numberOfOperations:int, numberOfElements:int, surfaceName, increment, UIprogress, opCount, firstLayerMethod, isCreatedByOffset, isCreatedByRotation, trajectory):
     surfacesList = []
     step = __first_layer_increment(firstLayerMethod, increment)
     for stepNumber in range(numberOfElements):
         if step == 0:
             newSurfList = [geompy.MakeCommon(volume, shell, False)] #, theName='toBeDeleted_first'
         else:
-            newSurfList = __new_surface(isCreatedByOffset, trajectory, volume, shell, step)
+            newSurfList = __new_surface(isCreatedByOffset, isCreatedByRotation, trajectory, volume, shell, step)
         if newSurfList != None:
             surfCount = 1
             for newSurf in newSurfList:
@@ -79,10 +80,15 @@ def __first_layer_increment(firstLayerMethod, increment):
         return increment/2
 
 
-def __new_surface(isCreatedByOffset, trajectory, volume, obj, step):
+def __new_surface(isCreatedByOffset, isCreatedByRotation, trajectory, volume, obj, step):
     if isCreatedByOffset:
+        print(f"__new_surface: Offset by {step}", flush=True)
         surf = geompy.Offset(obj, step, True)
+    elif isCreatedByRotation:
+        print(f"__new_surface: Rotate by {step}", flush=True)
+        surf = geompy.Rotate(obj, trajectory[0], step*math.pi/180.0, True)
     else:
+        print(f"__new_surface: Translate by {step}", flush=True)
         surf = geompy.TranslateVectorDistance(obj, trajectory[0], step, True)
     newSurf = geompy.MakeCommon(volume, surf, False)    #, theName='toBeDeleted'
     if geompy.NumberOfSubShapes(newSurf, geompy.ShapeType["SHELL"]) > 1:
@@ -92,3 +98,4 @@ def __new_surface(isCreatedByOffset, trajectory, volume, obj, step):
         return [newSurf]
     else:
         return None
+        

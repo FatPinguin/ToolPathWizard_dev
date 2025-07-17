@@ -44,6 +44,7 @@ class tool_export:
         self.rotVectorId = None
         self.orthoV = None
         self.rotV = None
+        self.flag7dof = False
         self.ui.pushButton_rotVect.clicked.connect(self.__select_vect_rot)
         self.ui.pushButton_orthoVect.clicked.connect(self.__select_vect_ortho)
         self.ui.checkBox_7axis_compilation.stateChanged.connect(self.__status_axis_7)
@@ -54,7 +55,7 @@ class tool_export:
     def __main(self):
         if self.fileName != None:
             self.ui.progressBar.show()
-            export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar, flag7axis=self.ui.checkBox_7axis_compilation, orthoVector=self.orthoV, rotVector=self.rotV)
+            export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar, flag7axis=self.flag7dof, orthoVector=self.orthoV, rotVector=self.rotV)
             #FCT.export_tool(data=env.dataStruct, fileAdress=self.fileName, exportInfillBeforePerimeter=self.exportInfillBeforePerimeter, UiProgressBar=self.ui.progressBar)
             self.__close_window()
         else:
@@ -121,6 +122,7 @@ class tool_export:
             self.ui.pushButton_orthoVect.setEnabled(True)
             self.ui.label_orthoVectValidation.setEnabled(True)
             self.ui.label_orthoVectEntry.setEnabled(True)
+            self.flag7dof = True
         else :
             self.ui.label_rotVect.setEnabled(False)
             self.ui.pushButton_rotVect.setEnabled(False)
@@ -142,5 +144,6 @@ class tool_export:
             self.ui.label_orthoVectValidation.hide()
             self.ui.label_rotVectEntry.setText("Entry: ")
             self.ui.label_orthoVectEntry.setText("Entry: ")
+            self.flag7dof = False
 
         

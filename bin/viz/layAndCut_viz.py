@@ -27,6 +27,7 @@ class tool_create_layersAndCutters:
         self.ui.radioButton_createCuttingTools.clicked.connect(self.__cutters_method)
         self.ui.radioButton_offset.clicked.connect(self.__offset_method)
         self.ui.radioButton_translation.clicked.connect(self.__translation_method)
+        self.ui.radioButton_rotation.clicked.connect(self.__rotation_method)
         self.ui.radioButton_noOption.clicked.connect(self.__start_at_first_increment_method)
         self.ui.radioButton_refIsFirst.clicked.connect(self.__ref_is_first_layer_method)
         self.ui.radioButton_firstIsHalfStep.clicked.connect(self.__first_is_half_increment_method)
@@ -44,12 +45,13 @@ class tool_create_layersAndCutters:
         button_group_method.setExclusive(True)
         button_group_method.addButton(self.ui.radioButton_offset)
         button_group_method.addButton(self.ui.radioButton_translation)
+        button_group_method.addButton(self.ui.radioButton_rotation)
         button_group_firstL = QtWidgets.QButtonGroup(self.window)
         button_group_firstL.setExclusive(True)
         button_group_firstL.addButton(self.ui.radioButton_refIsFirst)
         button_group_firstL.addButton(self.ui.radioButton_firstIsHalfStep)
         button_group_firstL.addButton(self.ui.radioButton_noOption)
-        objectListToHide = [self.ui.progressBar, self.ui.radioButton_offset, self.ui.radioButton_translation,
+        objectListToHide = [self.ui.progressBar, self.ui.radioButton_offset, self.ui.radioButton_translation, self.ui.radioButton_rotation,
             self.ui.radioButton_noOption, self.ui.radioButton_refIsFirst, self.ui.radioButton_firstIsHalfStep,
             self.ui.label_volume, self.ui.pushButton_setectVolume, self.ui.label_volumValidation, self.ui.label_volumeEntry,
             self.ui.label_referntialSurface, self.ui.pushButton_selectSurface, self.ui.label_surfaceValidation, self.ui.label_surfaceEntry,
@@ -70,7 +72,8 @@ class tool_create_layersAndCutters:
         self.trajectory:list = None
         self.trajectoryId:list = None
         self.isLayersFlag:bool = None    #layers = True, cutters = False
-        self.isCreatedByOffset:bool = None    #offset = True, translation = False
+        self.isCreatedByOffset:bool = None    #offset = True, translation or rotation = False
+        self.isCreatedByRotation:bool = None  #multirotation instead of multi translation
         self.firstLayerMethod:int = None    #start at first increment = 0, include ref as first surface = 1, first is half increment = 2
         self.increment:float = None
         self.numberOfElements:int = None
@@ -81,7 +84,8 @@ class tool_create_layersAndCutters:
     def __main(self):
         if self.volumes != None and self.shells != None:
             hide_object([self.ui.progressBar], False)
-            main_surfaces(self)#self.increment, self.volumes, self.volumesIds, self.shells, self.trajectory, self.numberOfElements, self.isCreatedByOffset, self.isLayersFlag, self.ui.progressBar, self.firstLayerMethod)
+            main_surfaces(self)  #perform actual operation
+            #self.increment, self.volumes, self.volumesIds, self.shells, self.trajectory, self.numberOfElements, self.isCreatedByOffset, self.isLayersFlag, self.ui.progressBar, self.firstLayerMethod)
             #self.numberOfOperations = len(self.volumes)*len(self.shells)*self.numberOfElements
             #for i in range(len(self.volumes)):
             #    volume = self.volumes[i]
@@ -150,7 +154,7 @@ class tool_create_layersAndCutters:
 
     def __layers_method(self):
         self.isLayersFlag = True
-        hide_object([self.ui.radioButton_offset, self.ui.radioButton_translation], False)
+        hide_object([self.ui.radioButton_offset, self.ui.radioButton_translation, self.ui.radioButton_rotation], False)
         if cfrDlfVersion:
             self.increment = machineParameters.laserTape.layIncr
             self.ui.lineEdit_increment.setText(str(self.increment))
@@ -160,7 +164,7 @@ class tool_create_layersAndCutters:
 
     def __cutters_method(self):
         self.isLayersFlag = False
-        hide_object([self.ui.radioButton_offset, self.ui.radioButton_translation], False)
+        hide_object([self.ui.radioButton_offset, self.ui.radioButton_translation, self.ui.radioButton_rotation], False)
         if cfrDlfVersion:
             self.increment = machineParameters.laserTape.cutIncr
             self.ui.lineEdit_increment.setText(str(self.increment))
@@ -180,6 +184,12 @@ class tool_create_layersAndCutters:
 
     def __translation_method(self):
         self.isCreatedByOffset = False
+        self.isCreatedByRotation = False
+        hide_object([self.ui.radioButton_noOption, self.ui.radioButton_refIsFirst, self.ui.radioButton_firstIsHalfStep], False)
+    
+    def __rotation_method(self):
+        self.isCreatedByOffset = False
+        self.isCreatedByRotation = True
         hide_object([self.ui.radioButton_noOption, self.ui.radioButton_refIsFirst, self.ui.radioButton_firstIsHalfStep], False)
     
 

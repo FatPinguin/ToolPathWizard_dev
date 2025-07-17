@@ -2,7 +2,8 @@ open cmd inside folder (tap cmd in url)
 pyuic5 -x file_name.ui -o file_name.py
 pyuic5 -x .ui -o .py
 
-
+alternative command: 
+python -m PyQt5.uic.pyuic arguments
 
 pyuic5 -x ui\Discretisation.ui -o Discretisation.py
 pyuic5 -x ui\Export.ui -o Export.py

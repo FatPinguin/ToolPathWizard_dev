@@ -1,7 +1,7 @@
 from .environment import geompy, salome
 from .Classes import cls_surface, cls_operation, cls_curve
 from ..viz.user_com import message_error
-from .common_variables import generalContinuityTolerance, succes, fail, fdmPerimeter, fdmInfill, milling, tapeLayingAirPulse, tapeLayingLaser, fdmPelletPerimeter, fdmPelletInfill, fdmFiberInfill, fdmFiberPerimeter, generic
+from .common_variables import generalContinuityTolerance, wireContinuityTolerance, succes, fail, fdmPerimeter, fdmInfill, milling, tapeLayingAirPulse, tapeLayingLaser, fdmPelletPerimeter, fdmPelletInfill, fdmFiberInfill, fdmFiberPerimeter, generic
 import ToolPathWizard_dev.bin.func.environment as env
 
 def operation_generator(fabricationMode:int, dataLayerList:list, dataToolList:list, evenUnevenOption:bool, skipOption:bool, uiProgressBar, positionTool):
@@ -26,7 +26,12 @@ def operation_generator(fabricationMode:int, dataLayerList:list, dataToolList:li
         wireCount = 0
         for dataTool in dataToolList:
             tool = salome.IDToObject(dataTool.surfaceId)
-            edgeCompound = geompy.MakeSection(layer, tool)
+            try:
+                edgeCompound = geompy.MakeSection(layer, tool)
+            except RuntimeError:
+                print(f"MakeSection failed on layer: {dataLayer.surfaceId} with cutter: {dataTool.surfaceId}")
+                print(f"This wire will be skipped.")
+                continue
             edgeList = geompy.ExtractShapes(edgeCompound, geompy.ShapeType["EDGE"], True)
             if wireGroupIsPublished == False and (len(edgeList) or str(edgeCompound.GetShapeType()) == "EDGE"):
                 wireGroup = geompy.MakeCompound([])#geompy.CreateGroup(layer, geompy.ShapeType["WIRE"], "Trajectories")
@@ -37,9 +42,10 @@ def operation_generator(fabricationMode:int, dataLayerList:list, dataToolList:li
                 wireGroupIsPublished = True
             if len(edgeList):
                 try:
-                    wire = geompy.MakeWire(edgeList, generalContinuityTolerance)
+                    wire = geompy.MakeWire(edgeList, wireContinuityTolerance)#generalContinuityTolerance) #TODO Rendre parametrable la tolérance de continuité pour MakeWire
                 except:
-                    message_error("Could not build desired wire. \nLayer ID: %s \nCutter ID: %s \nNumber of edges: %s"%(dataLayer.surfaceId, dataTool.surfaceId, len(edgeList)))
+                    message_error(f"MakeWire failed. Could not build desired wire. \nLayer ID: {dataLayer.surfaceId} \nCutter ID: {dataTool.surfaceId} \nNumber of edges: {len(edgeList)}\nThis wire will be skipped.")
+                    continue
                 if wire == None and len(edgeList) != 0 :
                     print("Couldn't build a wire.") #TODO - Gérer les cas ou plusieurs wires sont à créer. Détecter les discontinuités, etc. Si ilots de faces détecters précédement peut-etre pas besoin. Supprimer alors un étage de liste.
                 elif wire == None and len(edgeList) == 0 :
